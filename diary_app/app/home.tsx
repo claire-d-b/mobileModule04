@@ -12,6 +12,7 @@ import CRating from "./CRating";
 import CChip from "./CChip";
 import CModal from "./CModal";
 import CAvatar from "./CAvatar";
+import { Background } from "@react-navigation/elements";
 
 const nbOfEntriesPerPage = 6;
 
@@ -254,7 +255,7 @@ const Home = () => {
                 activeUnderlineColor="#534DB3"
                 selectionColor="#534DB3"
                 contentStyle={{}}
-                style={{ marginHorizontal: 20 }}
+                style={{ marginHorizontal: 20, backgroundColor: "white" }}
                 disabled={false}
                 multiline={false}
               />
@@ -302,7 +303,7 @@ const Home = () => {
                   activeUnderlineColor="#534DB3"
                   selectionColor="#534DB3"
                   contentStyle={{}}
-                  style={{ marginHorizontal: 20, height: 100 }}
+                  style={{ marginHorizontal: 20, backgroundColor: "white" }}
                   disabled={false}
                   multiline={true}
                 />
@@ -371,6 +372,12 @@ const Home = () => {
                       containerColor=""
                       size={20}
                       onPress={() => {}}
+                      disabled={true}
+                      theme={{
+                        colors: {
+                          onSurfaceDisabled: "white", // ← couleur de l'icône quand disabled
+                        },
+                      }}
                     />
                     {/* <Text numberOfLines={1} ellipsizeMode="tail" style={{ flex: 1, color: "#353172"  }}>{e.content}</Text> */}
                     <Text style={{ flex: 1, color: "#353172" }}>{e.title}</Text>

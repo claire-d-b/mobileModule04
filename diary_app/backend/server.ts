@@ -140,53 +140,6 @@ app.post(
 );
 
 // LOGIN USER
-// app.post(
-//   "/user/login",
-//   async (req: Request<{}, {}, LoginBody>, res: Response) => {
-//     const { login, password } = req.body;
-//     try {
-//       let result = await pool.query("SELECT * FROM users WHERE login = $1", [
-//         login,
-//       ]);
-//       const hashedPassword = await bcrypt.hash(password, 10);
-//       const insertResult = await pool.query(
-//         `INSERT INTO users (login, password, provider)
-//          VALUES ($1, $2, 'local')
-//          RETURNING *`,
-//         [login, hashedPassword],
-//       );
-//       const user = result.rows[0] ?? insertResult;
-
-//       // Vérifie que c'est un compte local
-//       if (user.provider !== "local") {
-//         return res.status(400).json({
-//           error: `Ce compte utilise ${user.provider}. Connecte-toi avec ${user.provider}.`,
-//         });
-//       }
-
-//       const isValid = await bcrypt.compare(password, user.password);
-//       if (!isValid) {
-//         return res.status(400).json({ error: "Invalid password" });
-//       }
-
-//       // Met à jour last_login
-//       await pool.query("UPDATE users SET updated_at = NOW() WHERE id = $1", [
-//         user.id,
-//       ]);
-
-//       console.log("✅ User logged in:", user.login);
-//       res.json({
-//         message: "Login success",
-//         user: { id: user.id, login: user.login, provider: user.provider },
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).json({ error: "Login failed" });
-//     }
-//   },
-// );
-
-// LOGIN USER
 app.post(
   "/user/login",
   async (req: Request<{}, {}, LoginBody>, res: Response) => {
@@ -254,22 +207,27 @@ app.post(
       const data = (await response.json()) as GithubTokenResponse;
       if (data.error) return res.status(400).json({ error: data.error });
 
+      const emailsRes = await fetch("https://api.github.com/user/emails", {
+        headers: { Authorization: `Bearer ${data.access_token}` },
+      });
+      const emails = (await emailsRes.json()) as {
+        email: string;
+        primary: boolean;
+      }[];
+      const login = emails
+        .filter((e) => e.primary === true)
+        .map((e) => e.email)[0];
+
       const profile = (await fetch("https://api.github.com/user", {
         headers: { Authorization: `Bearer ${data.access_token}` },
       }).then((r) => r.json())) as GithubProfile;
-      console.log("✅ GitHub profile:", profile);
 
-      const login = profile.email || profile.login;
-
-      // Upsert — crée ou met à jour l'utilisateur
       const result = await pool.query(
         `INSERT INTO users (login, provider, provider_id, created_at)
-       VALUES ($1, 'github', $2, NOW())
-       ON CONFLICT (login) DO UPDATE
-       SET provider = 'github',
-           provider_id = $2,
-           updated_at = NOW()
-       RETURNING id, login, provider`,
+        VALUES ($1, 'github', $2, NOW())
+        ON CONFLICT (login) DO UPDATE
+        SET provider = 'github', provider_id = $2, updated_at = NOW()
+        RETURNING id, login, provider`,
         [login, String(profile.id)],
       );
 
