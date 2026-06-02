@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
-import { View, Platform } from "react-native";
+import { View, Platform, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
@@ -12,6 +12,7 @@ import CRating from "./CRating";
 import CChip from "./CChip";
 import CModal from "./CModal";
 import CAvatar from "./CAvatar";
+import CButton from "./CButton";
 import { Background } from "@react-navigation/elements";
 
 const nbOfEntriesPerPage = 6;
@@ -55,8 +56,11 @@ const Home = () => {
   const [feeling, setFeeling] = useState(1);
 
   const [visible, setVisible] = useState(false);
+  const [details, setDetails] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const showDetails = () => setDetails(true);
+  const hideDetails = () => setDetails(false);
 
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -65,6 +69,15 @@ const Home = () => {
 
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
+
+  const [pressed, setPressed] = useState(true);
+
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+  };
 
   const auth = getAuth();
   const email = auth.currentUser?.email ?? localLogin;
@@ -228,8 +241,6 @@ const Home = () => {
             on a specific entry in the below list to get details.
           </Text>
           <CModal
-            type={type}
-            message={message}
             visible={visible}
             hideModal={hideModal}
             showModal={showModal}
@@ -320,13 +331,18 @@ const Home = () => {
             </View>
           </CModal>
           <View
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              padding: 20,
+            }}
           >
             {entries &&
               entries.length > 0 &&
               entries.map((e, i) => {
                 return (
-                  <View
+                  <Pressable
                     key={`entry_${i}`}
                     style={{
                       display: "flex",
@@ -336,8 +352,18 @@ const Home = () => {
                       padding: 5,
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: "#BBB0D1",
+                      backgroundColor: pressed ? "#BBB0D1" : "#534DB3",
                       borderRadius: 10,
+                    }}
+                    onPressIn={() => {
+                      setPressed((p) => !p);
+                      console.log("pressed");
+                    }}
+                    onPressOut={() => {
+                      setPressed((p) => !p);
+                      console.log("pressed");
+                      showDetails();
+                      // console.log(details);
                     }}
                   >
                     <View
@@ -380,17 +406,69 @@ const Home = () => {
                       }}
                     />
                     {/* <Text numberOfLines={1} ellipsizeMode="tail" style={{ flex: 1, color: "#353172"  }}>{e.content}</Text> */}
-                    <Text style={{ flex: 1, color: "#353172" }}>{e.title}</Text>
+                    <Text
+                      style={{ flex: 1, color: !pressed ? "white" : "#353172" }}
+                    >
+                      {e.title}
+                    </Text>
                     <CIconButton
                       icon="close"
-                      iconColor="#534DB3"
+                      iconColor={!pressed ? "white" : "#534DB3"}
                       containerColor=""
                       size={20}
                       onPress={() => {
                         deleteEntry(e.id);
                       }}
                     />
-                  </View>
+                    {details && (
+                      <>
+                        <Portal>
+                          <Modal
+                            style={{ width: "100%" }}
+                            visible={details}
+                            onDismiss={hideDetails}
+                            contentContainerStyle={containerStyle}
+                          >
+                            <CIconButton
+                              style={{ alignSelf: "flex-end" }}
+                              icon="close"
+                              iconColor="#534DB3"
+                              containerColor=""
+                              size={20}
+                              onPress={hideDetails}
+                            />
+                            {
+                              <View
+                                style={{
+                                  display: "flex",
+                                  width: "100%",
+                                  // height: "100%",
+                                }}
+                              >
+                                <Text style={{ color: "#534DB3" }}>
+                                  {formatDate(e.created_at)}
+                                </Text>
+                                <Text style={{ color: "#534DB3" }}>
+                                  {e.title}
+                                </Text>
+                                <Text style={{ color: "#534DB3" }}>
+                                  {e.content}
+                                </Text>
+                              </View>
+                            }
+                            <View
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                              }}
+                            ></View>
+                          </Modal>
+                        </Portal>
+                      </>
+                    )}
+                  </Pressable>
                 );
               })}
           </View>
