@@ -25,7 +25,7 @@ const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.39:3000";
+const backendUrl = "http://192.168.1.192:3000";
 
 interface Entry {
   id: number;
@@ -60,7 +60,11 @@ const Home = () => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const hideDetails = () => setSelectedIndex(null);
+  const hideDetails = () => {
+    setSelectedIndex(null);
+    setDetails(false);
+  };
+  const showDetails = () => setDetails(true);
 
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -80,7 +84,7 @@ const Home = () => {
 
   const auth = getAuth();
   const email = auth.currentUser?.email ?? localLogin;
-  console.log(auth.currentUser);
+  // console.log(auth.currentUser);
 
   const getEmail = () => {
     const firebaseEmail = getAuth().currentUser?.email;
@@ -204,6 +208,8 @@ const Home = () => {
     fetchEntries(page);
     setPage(0);
   }, [localLogin]);
+
+  const selectedEntry = selectedIndex !== null ? entries[selectedIndex] : null;
 
   return (
     <SafeAreaView
@@ -367,6 +373,7 @@ const Home = () => {
                         prev.map((v, idx) => (idx === i ? false : v)),
                       );
                       setSelectedIndex(i);
+                      showDetails();
                     }}
                   >
                     <View
@@ -392,7 +399,9 @@ const Home = () => {
                         icon=""
                         disabled={true}
                       >
-                        {formatDate(e.created_at)}
+                        <Text style={{ color: "#534DB3" }}>
+                          {formatDate(e.created_at)}
+                        </Text>
                       </CChip>
                     </View>
                     <CIconButton
@@ -415,35 +424,21 @@ const Home = () => {
                         flexDirection: "row",
                       }}
                     >
-                      <View
+                      <Text
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          flex: 1,
+                          color: pressed[i] ? "white" : "#353172",
                         }}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
                       >
-                        <Text
-                          style={{
-                            flex: 1,
-                            color: pressed[i] ? "white" : "#353172",
-                          }}
-                          numberOfLines={1}
-                          ellipsizeMode="clip"
-                        >
-                          {e.title}
-                        </Text>
-                        <Text
-                          style={{ color: pressed[i] ? "white" : "#353172" }}
-                        >
-                          ...
-                        </Text>
-                      </View>
+                        {e.title}
+                      </Text>
                     </View>
                     <CIconButton
                       icon="close"
                       iconColor={pressed[i] ? "white" : "#534DB3"}
-                      containerColor=""
+                      containerColor="transparent"
                       size={20}
                       onPress={() => {
                         deleteEntry(e.id);
@@ -484,10 +479,19 @@ const Home = () => {
                                   }}
                                 >
                                   <Text style={{ color: "#534DB3" }}>
-                                    {formatDate(e.created_at)}
+                                    {formatDate(
+                                      selectedEntry?.created_at ??
+                                        formatDate(
+                                          new Date().toLocaleDateString(),
+                                        ),
+                                    )}
                                   </Text>
                                   <CIconButton
-                                    icon={emotions[(e.feeling ?? 1) - 1]}
+                                    icon={
+                                      emotions[
+                                        (selectedEntry?.feeling ?? 1) - 1
+                                      ]
+                                    }
                                     iconColor="#534DB3"
                                     containerColor=""
                                     size={20}
@@ -500,11 +504,11 @@ const Home = () => {
                                     }}
                                   />
                                   <Text style={{ color: "#534DB3" }}>
-                                    {e.title}
+                                    {selectedEntry?.title}
                                   </Text>
                                 </View>
                                 <Text style={{ color: "#534DB3" }}>
-                                  {e.content}
+                                  {selectedEntry?.content}
                                 </Text>
                               </View>
                             }
@@ -554,12 +558,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// id SERIAL PRIMARY KEY,
-// user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-// date DATE NOT NULL DEFAULT CURRENT_DATE,
-// title VARCHAR(255),
-// feeling INTEGER CHECK (feeling BETWEEN 1 AND 5),
-// content TEXT,
-// created_at TIMESTAMP DEFAULT NOW(),
-// updated_at TIMESTAMP DEFAULT NOW()

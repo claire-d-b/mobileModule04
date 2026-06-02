@@ -21,7 +21,7 @@ const useGithubAuth = () => {
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
-      clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID,
+      clientId: process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID ?? "",
       scopes: ["read:user", "user:email"],
       redirectUri,
 
@@ -45,7 +45,7 @@ const useGithubAuth = () => {
         return;
       }
 
-      const backendUrl = "http://192.168.1.39:3000/auth/github";
+      const backendUrl = "http://192.168.1.192:3000/auth/github";
       try {
         const res = await fetch(backendUrl, {
           method: "POST",
