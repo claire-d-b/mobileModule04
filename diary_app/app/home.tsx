@@ -59,8 +59,8 @@ const Home = () => {
   const [details, setDetails] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const showDetails = () => setDetails(true);
-  const hideDetails = () => setDetails(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const hideDetails = () => setSelectedIndex(null);
 
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -70,8 +70,7 @@ const Home = () => {
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
 
-  const [pressed, setPressed] = useState(true);
-
+  const [pressed, setPressed] = useState<boolean[]>([false]);
   const containerStyle = {
     backgroundColor: "white",
     padding: 20,
@@ -85,7 +84,7 @@ const Home = () => {
 
   const getEmail = () => {
     const firebaseEmail = getAuth().currentUser?.email;
-    return firebaseEmail ?? null;
+    return firebaseEmail ?? localLogin ?? null;
   };
 
   const formatDate = (timestamp: string) => {
@@ -110,11 +109,14 @@ const Home = () => {
         console.error("❌ Failed to fetch entries:", data.error);
         return;
       }
-      setEntries(data ?? []); // ← fallback si backend retourne encore un tableau brut
-      // setPage(page ?? pageNumber);
-      setTotalPages(Math.ceil(data.length / nbOfEntriesPerPage));
+      // ✅ data est un tableau brut
+      const list: Entry[] = Array.isArray(data) ? data : (data.entries ?? []);
 
-      console.log("✅ Entries fetched:", data.entries.length);
+      setEntries(list);
+      setPressed(new Array(list.length).fill(false)); // ✅ sync avec les entries
+      setTotalPages(Math.ceil(list.length / nbOfEntriesPerPage));
+
+      console.log("✅ Entries fetched:", list.length);
     } catch (err) {
       console.error("❌ Error fetching entries:", err);
     }
@@ -201,7 +203,7 @@ const Home = () => {
   useEffect(() => {
     fetchEntries(page);
     setPage(0);
-  }, [email]);
+  }, [localLogin]);
 
   return (
     <SafeAreaView
@@ -352,18 +354,19 @@ const Home = () => {
                       padding: 5,
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: pressed ? "#BBB0D1" : "#534DB3",
+                      backgroundColor: !pressed[i] ? "#BBB0D1" : "#534DB3",
                       borderRadius: 10,
                     }}
                     onPressIn={() => {
-                      setPressed((p) => !p);
-                      console.log("pressed");
+                      setPressed((prev) =>
+                        prev.map((v, idx) => (idx === i ? true : v)),
+                      );
                     }}
                     onPressOut={() => {
-                      setPressed((p) => !p);
-                      console.log("pressed");
-                      showDetails();
-                      // console.log(details);
+                      setPressed((prev) =>
+                        prev.map((v, idx) => (idx === i ? false : v)),
+                      );
+                      setSelectedIndex(i);
                     }}
                   >
                     <View
@@ -405,15 +408,19 @@ const Home = () => {
                         },
                       }}
                     />
-                    {/* <Text numberOfLines={1} ellipsizeMode="tail" style={{ flex: 1, color: "#353172"  }}>{e.content}</Text> */}
                     <Text
-                      style={{ flex: 1, color: !pressed ? "white" : "#353172" }}
+                      style={{
+                        flex: 1,
+                        color: !pressed[i] ? "white" : "#353172",
+                      }}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {e.title}
                     </Text>
                     <CIconButton
                       icon="close"
-                      iconColor={!pressed ? "white" : "#534DB3"}
+                      iconColor={!pressed[i] ? "white" : "#534DB3"}
                       containerColor=""
                       size={20}
                       onPress={() => {
