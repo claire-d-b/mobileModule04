@@ -354,7 +354,7 @@ const Home = () => {
                       padding: 5,
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: !pressed[i] ? "#BBB0D1" : "#534DB3",
+                      backgroundColor: pressed[i] ? "#534DB3" : "#BBB0D1",
                       borderRadius: 10,
                     }}
                     onPressIn={() => {
@@ -408,19 +408,41 @@ const Home = () => {
                         },
                       }}
                     />
-                    <Text
+                    <View
                       style={{
                         flex: 1,
-                        color: !pressed[i] ? "white" : "#353172",
+                        overflow: "hidden",
+                        flexDirection: "row",
                       }}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
                     >
-                      {e.title}
-                    </Text>
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            flex: 1,
+                            color: pressed[i] ? "white" : "#353172",
+                          }}
+                          numberOfLines={1}
+                          ellipsizeMode="clip"
+                        >
+                          {e.title}
+                        </Text>
+                        <Text
+                          style={{ color: pressed[i] ? "white" : "#353172" }}
+                        >
+                          ...
+                        </Text>
+                      </View>
+                    </View>
                     <CIconButton
                       icon="close"
-                      iconColor={!pressed[i] ? "white" : "#534DB3"}
+                      iconColor={pressed[i] ? "white" : "#534DB3"}
                       containerColor=""
                       size={20}
                       onPress={() => {
