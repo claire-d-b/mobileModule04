@@ -445,12 +445,35 @@ const Home = () => {
                                   // height: "100%",
                                 }}
                               >
-                                <Text style={{ color: "#534DB3" }}>
-                                  {formatDate(e.created_at)}
-                                </Text>
-                                <Text style={{ color: "#534DB3" }}>
-                                  {e.title}
-                                </Text>
+                                <View
+                                  style={{
+                                    display: "flex",
+                                    width: "100%",
+                                    flexDirection: "row",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Text style={{ color: "#534DB3" }}>
+                                    {formatDate(e.created_at)}
+                                  </Text>
+                                  <CIconButton
+                                    icon={emotions[(e.feeling ?? 1) - 1]}
+                                    iconColor="#534DB3"
+                                    containerColor=""
+                                    size={20}
+                                    onPress={() => {}}
+                                    disabled={true}
+                                    theme={{
+                                      colors: {
+                                        onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
+                                      },
+                                    }}
+                                  />
+                                  <Text style={{ color: "#534DB3" }}>
+                                    {e.title}
+                                  </Text>
+                                </View>
                                 <Text style={{ color: "#534DB3" }}>
                                   {e.content}
                                 </Text>
