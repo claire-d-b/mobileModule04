@@ -12,6 +12,7 @@ import CRating from "./CRating";
 import CChip from "./CChip";
 import CModal from "./CModal";
 import CAvatar from "./CAvatar";
+import type { MD3Colors } from "react-native-paper";
 import CButton from "./CButton";
 import { Background } from "@react-navigation/elements";
 
@@ -77,7 +78,6 @@ const Home = () => {
   const [pressed, setPressed] = useState<boolean[]>([false]);
   const containerStyle = {
     backgroundColor: "white",
-    padding: 20,
     margin: 20,
     borderRadius: 10,
   };
@@ -395,7 +395,6 @@ const Home = () => {
                         mode="outlined"
                         textStyle={{ color: "#534DB3" }}
                         style={{}}
-                        buttonColor="#534DB3"
                         icon=""
                         disabled={true}
                       >
@@ -436,7 +435,7 @@ const Home = () => {
                       </Text>
                     </View>
                     <CIconButton
-                      icon="close"
+                      icon="trash-can-outline"
                       iconColor={pressed[i] ? "white" : "#534DB3"}
                       containerColor="transparent"
                       size={20}
@@ -448,7 +447,7 @@ const Home = () => {
                       <>
                         <Portal>
                           <Modal
-                            style={{ width: "100%" }}
+                            style={{ width: "100%", padding: 10 }}
                             visible={details}
                             onDismiss={hideDetails}
                             contentContainerStyle={containerStyle}
@@ -466,6 +465,9 @@ const Home = () => {
                                 style={{
                                   display: "flex",
                                   width: "100%",
+                                  paddingBottom: 20,
+                                  paddingLeft: 20,
+                                  paddingRight: 20,
                                   // height: "100%",
                                 }}
                               >
@@ -478,20 +480,33 @@ const Home = () => {
                                     alignItems: "center",
                                   }}
                                 >
-                                  <Text style={{ color: "#534DB3" }}>
-                                    {formatDate(
-                                      selectedEntry?.created_at ??
-                                        formatDate(
-                                          new Date().toLocaleDateString(),
-                                        ),
-                                    )}
-                                  </Text>
+                                  <CChip
+                                    onPress={() => {}}
+                                    label=""
+                                    mode="outlined"
+                                    icon=""
+                                    disabled={true}
+                                    textStyle={{}}
+                                    style={{
+                                      borderColor: "#534DB3", // ← directement dans style
+                                      borderWidth: 1,
+                                    }}
+                                  >
+                                    <Text style={{ color: "#534DB3" }}>
+                                      {formatDate(
+                                        selectedEntry?.created_at ??
+                                          formatDate(
+                                            new Date().toLocaleDateString(),
+                                          ),
+                                      )}
+                                    </Text>
+                                  </CChip>
                                   <CIconButton
-                                    icon={
+                                    icon={`${
                                       emotions[
                                         (selectedEntry?.feeling ?? 1) - 1
                                       ]
-                                    }
+                                    }-outline`}
                                     iconColor="#534DB3"
                                     containerColor=""
                                     size={20}
@@ -503,9 +518,25 @@ const Home = () => {
                                       },
                                     }}
                                   />
-                                  <Text style={{ color: "#534DB3" }}>
-                                    {selectedEntry?.title}
-                                  </Text>
+                                  <CChip
+                                    theme={{
+                                      colors: {
+                                        surfaceDisabled: "#BBB0D1",
+                                        onSurfaceDisabled: "#534DB3",
+                                      } as any,
+                                    }}
+                                    onPress={() => {}}
+                                    label=""
+                                    mode="flat"
+                                    textStyle={{ color: "white" }}
+                                    style={{ backgroundColor: "#BBB0D1" }}
+                                    icon=""
+                                    disabled={true}
+                                  >
+                                    <Text style={{ color: "#534DB3" }}>
+                                      {selectedEntry?.title}
+                                    </Text>
+                                  </CChip>
                                 </View>
                                 <Text style={{ color: "#534DB3" }}>
                                   {selectedEntry?.content}
