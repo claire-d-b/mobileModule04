@@ -165,7 +165,7 @@ const Home = () => {
       setContent("");
       setFeeling(1);
       await fetchEntries(0);
-      // hideModal();
+      hideModal();
     } catch (err) {
       console.error("❌ Error creating entry:", err);
     }
