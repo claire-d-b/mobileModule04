@@ -1,7 +1,11 @@
 diary_app/node_modules
+diary_app/package-lock.json
+diary_app/tsconfig.json
+diary_app/app.json
+diary_app/.expo
+diary_app/expo-env.d.ts
+diary_app/android
 diary_app/backend/node_modules
-diary_app/android/build
-diary_app/ios/build
 .expo
 dist
 diary_app/.env

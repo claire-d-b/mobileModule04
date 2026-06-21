@@ -1,0 +1,10 @@
+in diary_app/backend node reset-db.ts, node create-user.ts, node server.ts
+in diary_app - npx expo start --clear --tunnel
+s - switch to development build for auth
+
+Deep linking = ouvrir ton app depuis une URL externe.
+
+- Sans scheme
+  Ton app n'a pas d'URL. Impossible de l'ouvrir depuis un lien, un email, ou une redirection OAuth.
+- Avec scheme
+  Ton app devient accessible via une URL custom

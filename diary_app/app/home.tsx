@@ -26,7 +26,7 @@ const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 interface Entry {
   id: number;
@@ -399,7 +399,7 @@ const Home = () => {
                         disabled={true}
                       >
                         <Text style={{ color: "#534DB3" }}>
-                          {formatDate(e.created_at)}
+                          {formatDate(e.date)}
                         </Text>
                       </CChip>
                     </View>
@@ -494,7 +494,7 @@ const Home = () => {
                                   >
                                     <Text style={{ color: "#534DB3" }}>
                                       {formatDate(
-                                        selectedEntry?.created_at ??
+                                        selectedEntry?.date ??
                                           formatDate(
                                             new Date().toLocaleDateString(),
                                           ),

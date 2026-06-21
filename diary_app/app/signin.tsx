@@ -6,8 +6,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
 import { router } from "expo-router";
 import auth from "../config/firebase";
-import useGoogleAuth from "../hooks/auth_google";
-import useGithubAuth from "../hooks/auth_github";
+import useGoogleAuth from "../auth/auth_google";
+import useGithubAuth from "../auth/auth_github";
 import CTextInput from "./CTextInput";
 import CButton from "./CButton";
 
@@ -16,7 +16,7 @@ interface Information {
   password: string;
 }
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 const SignIn = () => {
   const [login, setLogin] = useState("");
