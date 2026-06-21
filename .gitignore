@@ -7,8 +7,6 @@ diary_app/expo-env.d.ts
 diary_app/android
 diary_app/GoogleService-Info.plist
 diary_app/backend/node_modules
-.expo
-dist
 diary_app/.env
 diary_app/backend/.env
 
