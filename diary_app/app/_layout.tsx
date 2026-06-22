@@ -1,50 +1,41 @@
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import * as WebBrowser from "expo-web-browser";
 import auth from "../config/firebase";
-import { AuthProvider } from "../context/AuthContext";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { AuthProvider, useAuthContext } from "../context/AuthContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function RootLayout() {
-  const [user, setUser] = useState<User | null>(null);
-  const [ready, setReady] = useState(false);
+const RootLayoutNav = () => {
+  const { localLogin, loading } = useAuthContext();
   const router = useRouter();
-  const segments = useSegments();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      console.log("🔥 Auth state changed:", firebaseUser?.email ?? "null");
-      setUser(firebaseUser);
-      setReady(true);
-    });
-    return () => unsubscribe();
-  }, []);
+    if (loading) return; // ← attendre que Firebase soit prêt
 
-  useEffect(() => {
-    if (!ready) return;
-    console.log("👤 user:", user?.email, "| segment:", segments[0]);
-
-    if (user) {
-      router.replace("/home"); // ✅ connecté → home
+    if (!localLogin) {
+      router.replace("/signin");
     } else {
-      const onProtectedPage = segments[0] === "home";
-      if (onProtectedPage) router.replace("/home");
+      router.replace("/home");
     }
-  }, [user, ready]);
+  }, [localLogin, loading]);
 
+  if (loading) return null;
+  // headerShown : C'est l'option qui contrôle l'affichage de la barre de navigation en haut de l'écran.
   return (
     <AuthProvider>
-      <SafeAreaProvider>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="signin" />
-          <Stack.Screen name="register" />
-          <Stack.Screen name="home" />
-        </Stack>
-      </SafeAreaProvider>
+      <Stack screenOptions={{ headerShown: false }} />
     </AuthProvider>
   );
-}
+};
+
+const _ = () => {
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
+  );
+};
+
+export default _;

@@ -5,27 +5,19 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 interface AuthContextType {
   localLogin: string | null;
   setLocalLogin: (login: string | null) => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
   localLogin: null,
   setLocalLogin: async () => {},
+  loading: true,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [localLogin, setLocalLoginState] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // ← nouveau
 
-  // 1. restore asyncstorage
-  useEffect(() => {
-    AsyncStorage.getItem("localLogin").then((val) => {
-      if (val) {
-        console.log("✅ localLogin loaded:", val);
-        setLocalLoginState(val);
-      }
-    });
-  }, []);
-
-  // 2. sync Firebase auth (IMPORTANT FIX)
   useEffect(() => {
     const auth = getAuth();
 
@@ -36,6 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setLocalLoginState(user.email);
         await AsyncStorage.setItem("localLogin", user.email);
       }
+      setLoading(false);
     });
 
     return unsubscribe;
@@ -52,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ localLogin, setLocalLogin }}>
+    <AuthContext.Provider value={{ localLogin, setLocalLogin, loading }}>
       {children}
     </AuthContext.Provider>
   );

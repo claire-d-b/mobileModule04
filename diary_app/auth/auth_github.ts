@@ -2,32 +2,38 @@ import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect, useRef } from "react";
 import { GithubAuthProvider, signInWithCredential } from "firebase/auth";
-import { Platform } from "react-native";
 import auth from "../config/firebase";
 
-WebBrowser.maybeCompleteAuthSession();
+// Ferme le navigateur pour revenir à l'app
+// WebBrowser.maybeCompleteAuthSession();
+
+// authorizationEndpoint — l'URL du navigateur qui s'ouvre quand l'utilisateur clique sur "Login with GitHub"
+// tokenEndpoint — l'URL pour échanger le code contre un access_token. Dans ton cas tu ne l'utilises pas directement car c'est ton backend qui fait cet échange (pour ne pas exposer le client_secret dans l'app).
+// En résumé : discovery est la carte routière d'OAuth — il dit à AuthSession :
+// - où envoyer l'utilisateur pour se connecter
+// - où aller ensuite pour récupérer le token
 
 const discovery = {
   authorizationEndpoint: "https://github.com/login/oauth/authorize",
   tokenEndpoint: "https://github.com/login/oauth/access_token",
 };
 
+// url de redirectionde github après le login
 const useGithubAuth = () => {
   const redirectUri = AuthSession.makeRedirectUri({
     scheme: "com.anonymous.diaryapp", // ⚠️ MUST match app.json
   });
 
-  const isHandled = useRef(false);
   const clientId = process.env.EXPO_PUBLIC_GITHUB_CLIENT_ID;
   if (!clientId)
     throw new Error("Missing EXPO_PUBLIC_GITHUB_CLIENT_ID in .env");
+  // promptasync -> ouverture du navigateur
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
-      clientId,
-      scopes: ["read:user", "user:email"],
-      redirectUri,
-
-      // ❗ GitHub OAuth Apps DO NOT support PKCE
+      clientId, // GitHub OAuth App ID
+      scopes: ["read:user", "user:email"], // ce que tu demandes comme permissions
+      redirectUri, // où GitHub redirige après login
+      // PKCE (Proof Key for Code Exchange) est une sécurité supplémentaire pour les apps mobiles, mais GitHub OAuth Apps ne le supportent pas — donc on le désactive.
       usePKCE: false,
     },
     discovery,
@@ -35,15 +41,12 @@ const useGithubAuth = () => {
 
   useEffect(() => {
     if (response?.type !== "success") return;
-    if (isHandled.current) return;
-
-    isHandled.current = true;
 
     const signIn = async () => {
       const { code } = response.params;
 
       if (!code) {
-        console.error("❌ Missing code");
+        console.error("Missing code");
         return;
       }
 
@@ -54,39 +57,34 @@ const useGithubAuth = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             code,
-            redirectUri, // ✅ send this instead of codeVerifier
+            redirectUri,
           }),
         });
 
         if (!res.ok) {
-          const errText = await res.text();
-          console.error("❌ Backend error:", errText);
+          const error = await res.text();
+          console.error("Backend error:", error);
           return;
         }
 
         const data = await res.json();
 
         if (!data.access_token) {
-          console.error("❌ No access token returned");
+          console.error("No access token returned");
           return;
         }
 
-        // Firebase login
+        // Utilise le token GitHub pour créer une session Firebase — l'utilisateur est maintenant connecté.
         const credential = GithubAuthProvider.credential(data.access_token);
         await signInWithCredential(auth, credential);
 
-        console.log("✅ GitHub login success");
+        console.log("GitHub login success");
       } catch (error) {
-        console.error("❌ GitHub auth error:", error);
+        console.error("GitHub auth error:", error);
       }
     };
 
     signIn();
-
-    // optional reset if you want retry capability
-    return () => {
-      isHandled.current = false;
-    };
   }, [response]);
 
   return { promptAsync, request };

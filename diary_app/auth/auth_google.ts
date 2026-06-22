@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import { Platform } from "react-native";
 import auth from "../config/firebase";
 
-WebBrowser.maybeCompleteAuthSession();
+// WebBrowser.maybeCompleteAuthSession();
 
 const backendUrl = "http://192.168.1.12:3000";
 
