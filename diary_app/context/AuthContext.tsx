@@ -35,9 +35,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setLocalLoginState(user.email);
         await AsyncStorage.setItem("localLogin", user.email);
-      } else {
-        setLocalLoginState(null);
-        await AsyncStorage.removeItem("localLogin");
       }
     });
 

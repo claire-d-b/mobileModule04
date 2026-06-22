@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
 import { View, Platform, Pressable } from "react-native";
 import { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
@@ -11,6 +11,7 @@ import CIconButton from "./CIconButton";
 import CRating from "./CRating";
 import CChip from "./CChip";
 import CModal from "./CModal";
+import CDialog from "./CDialog";
 import CAvatar from "./CAvatar";
 import type { MD3Colors } from "react-native-paper";
 import CButton from "./CButton";
@@ -26,7 +27,7 @@ const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.39:3000";
+const backendUrl = "http://192.168.1.12:3000";
 
 interface Entry {
   id: number;
@@ -35,6 +36,11 @@ interface Entry {
   feeling: number;
   content: string;
   created_at: string;
+}
+
+interface deleteProps {
+  setDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+  i: number;
 }
 
 interface PaginatedResponse {
@@ -57,18 +63,30 @@ const Home = () => {
   const [feeling, setFeeling] = useState(1);
 
   const [visible, setVisible] = useState(false);
-  const [details, setDetails] = useState(false);
+  const [visibleDialog, setVisibleDialog] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const showDialog = () => setVisibleDialog(true);
+  const hideDialog = () => setVisibleDialog(false);
+
+  // Dans Home.tsx
+  const [entryToDelete, setEntryToDelete] = useState<number | null>(null);
+
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const [deleted, setDeleted] = useState(false);
+
+  const [details, setDetails] = useState(false);
+  const showDetails = () => setDetails(true);
   const hideDetails = () => {
     setSelectedIndex(null);
     setDetails(false);
   };
-  const showDetails = () => setDetails(true);
 
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+
+  const [hasNext, setHasNext] = useState(false);
+  const [hasPrev, setHasPrev] = useState(false);
 
   const [entries, setEntries] = useState<Entry[]>([]);
 
@@ -83,44 +101,46 @@ const Home = () => {
   };
 
   const auth = getAuth();
-  const email = auth.currentUser?.email ?? localLogin;
-  // console.log(auth.currentUser);
+  const [email, setEmail] = useState<string | null>(localLogin ?? null);
 
-  const getEmail = () => {
-    const firebaseEmail = getAuth().currentUser?.email;
-    return firebaseEmail ?? localLogin ?? null;
-  };
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const resolvedEmail = user?.email ?? localLogin ?? null;
+      setEmail(resolvedEmail);
+      // ✅ passe resolvedEmail
+      if (resolvedEmail) fetchEntries(0, resolvedEmail);
+    });
+    return () => unsubscribe();
+  }, [localLogin]);
+
+  useEffect(() => {
+    if (email) fetchEntries(page, email);
+  }, [entries.length]); // ← se déclenche quand le nombre d'entrées change
 
   const formatDate = (timestamp: string) => {
     return new Date(timestamp).toISOString().split("T")[0]; // "2026-05-01"
   };
 
-  const fetchEntries = async (pageNumber = 0) => {
-    const email = getEmail();
-    console.log("📡 fetchEntries email:", email);
-    console.log(pageNumber);
-    if (!email) return;
+  const fetchEntries = async (
+    pageNumber = 0,
+    resolvedEmail?: string | null,
+  ) => {
+    const emailToUse = resolvedEmail ?? email;
+    if (!emailToUse) return;
 
     try {
       const res = await fetch(
-        `${backendUrl}/entries/${encodeURIComponent(email)}?page=${pageNumber}`,
+        `${backendUrl}/entries/${encodeURIComponent(emailToUse)}?page=${pageNumber}`,
       );
-
       const data = await res.json();
-      console.log("data:", data);
+      if (!res.ok) return;
 
-      if (!res.ok) {
-        console.error("❌ Failed to fetch entries:", data.error);
-        return;
-      }
-      // ✅ data est un tableau brut
-      const list: Entry[] = Array.isArray(data) ? data : (data.entries ?? []);
-
+      const list: Entry[] = data.entries ?? [];
       setEntries(list);
-      setPressed(new Array(list.length).fill(false)); // ✅ sync avec les entries
-      setTotalPages(Math.ceil(list.length / nbOfEntriesPerPage));
-
-      console.log("✅ Entries fetched:", list.length);
+      setPressed(new Array(list.length).fill(false));
+      setHasNext(data.hasNext); // ✅
+      setHasPrev(data.hasPrev); // ✅
     } catch (err) {
       console.error("❌ Error fetching entries:", err);
     }
@@ -164,7 +184,7 @@ const Home = () => {
       setTitle("");
       setContent("");
       setFeeling(1);
-      await fetchEntries(0);
+      await fetchEntries(0, email);
       hideModal();
     } catch (err) {
       console.error("❌ Error creating entry:", err);
@@ -182,32 +202,37 @@ const Home = () => {
         return;
       }
       console.log("✅ Entry deleted:", data.entry);
-      await fetchEntries(page); // ← recharge la page courante
+
+      // ← si c'était la dernière entrée de la page, revenir à la page précédente
+      if (entries.length === 1 && page > 0) {
+        const prevPage = page - 1;
+        setPage(prevPage);
+        await fetchEntries(prevPage, email);
+      } else {
+        await fetchEntries(page, email);
+      }
     } catch (err) {
       console.error("❌ Error deleting entry:", err);
     }
   };
 
   const loadMore = async () => {
-    if (page < totalPages) {
+    if (hasNext) {
+      // ✅ au lieu de page < totalPages
       const nextPage = page + 1;
-      await fetchEntries(nextPage);
+      await fetchEntries(nextPage, email);
       setPage(nextPage);
     }
   };
 
   const loadLess = async () => {
-    if (page > 0) {
+    if (hasPrev) {
+      // ✅ au lieu de page > 0
       const nextPage = page - 1;
-      await fetchEntries(nextPage);
+      await fetchEntries(nextPage, email);
       setPage(nextPage);
     }
   };
-
-  useEffect(() => {
-    fetchEntries(page);
-    setPage(0);
-  }, [localLogin]);
 
   const selectedEntry = selectedIndex !== null ? entries[selectedIndex] : null;
 
@@ -440,7 +465,8 @@ const Home = () => {
                       containerColor="transparent"
                       size={20}
                       onPress={() => {
-                        deleteEntry(e.id);
+                        setEntryToDelete(e.id); // ← stocke le bon id
+                        showDialog();
                       }}
                     />
                     {details && (
@@ -583,6 +609,14 @@ const Home = () => {
             />
           </View>
         </View>
+        <CDialog
+          visibleDialog={visibleDialog}
+          setVisibleDialog={setVisibleDialog}
+          showDialog={showDialog}
+          hideDialog={hideDialog}
+          deleteEntry={deleteEntry}
+          idx={entryToDelete ?? -1}
+        />
       </PaperProvider>
     </SafeAreaView>
   );

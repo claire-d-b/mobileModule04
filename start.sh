@@ -55,4 +55,20 @@ export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 # ********* npm cache *********
 npm config set cache "$HOME/sgoinfre/.npm-cache"
 
+export IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+
+cd "$HOME/sgoinfre/mobileModule02/diary_app/backend/"
+
+cat > .env << EOF
+DB_USER=claire
+DB_HOST=localhost
+DB_NAME=diary_app
+DB_PASSWORD=
+DB_PORT=5432
+GITHUB_CLIENT_ID=Ov23liMl9KamCid3JjRa
+GITHUB_CLIENT_SECRET=9e3727a7436310829c86ba8578b195daadebc389
+TEST_USER_PASSWORD=Test1234
+IP_ADDRESS=$IP
+EOF
+
 cd "$HOME/sgoinfre/mobileModule02"

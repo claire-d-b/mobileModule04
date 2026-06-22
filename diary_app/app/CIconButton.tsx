@@ -8,7 +8,7 @@ interface Props {
   mode?: "outlined" | "contained" | "contained-tonal" | undefined;
   icon: string;
   iconColor: string;
-  containerColor: string;
+  containerColor?: string;
   size: number;
   onPress: (e: GestureResponderEvent) => void;
   disabled?: boolean;
