@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
-import { View, Platform, Pressable } from "react-native";
+import { View, Platform, Pressable, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
@@ -27,7 +27,7 @@ const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 interface Entry {
   id: number;
@@ -273,6 +273,114 @@ const Home = () => {
             Add a new entry to your diary by clicking Add entry. You can click
             on a specific entry in the below list to get details.
           </Text>
+          {details && (
+            <>
+              <Portal>
+                <Modal
+                  style={{ width: "100%", padding: 10 }}
+                  visible={details}
+                  onDismiss={hideDetails}
+                  contentContainerStyle={containerStyle}
+                >
+                  <CIconButton
+                    style={{ alignSelf: "flex-end" }}
+                    icon="close"
+                    iconColor="#534DB3"
+                    containerColor=""
+                    size={20}
+                    onPress={hideDetails}
+                  />
+                  {
+                    <View
+                      style={{
+                        display: "flex",
+                        width: "100%",
+                        paddingBottom: 20,
+                        paddingLeft: 20,
+                        paddingRight: 20,
+                        // height: "100%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <CChip
+                          onPress={() => {}}
+                          label=""
+                          mode="outlined"
+                          icon=""
+                          disabled={true}
+                          textStyle={{}}
+                          style={{
+                            borderColor: "#534DB3", // ← directement dans style
+                            borderWidth: 1,
+                          }}
+                        >
+                          <Text style={{ color: "#534DB3" }}>
+                            {formatDate(
+                              selectedEntry?.date ??
+                                formatDate(new Date().toLocaleDateString()),
+                            )}
+                          </Text>
+                        </CChip>
+                        <CIconButton
+                          icon={`${
+                            emotions[(selectedEntry?.feeling ?? 1) - 1]
+                          }-outline`}
+                          iconColor="#534DB3"
+                          containerColor=""
+                          size={20}
+                          onPress={() => {}}
+                          disabled={true}
+                          theme={{
+                            colors: {
+                              onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
+                            },
+                          }}
+                        />
+                        <CChip
+                          theme={{
+                            colors: {
+                              surfaceDisabled: "#BBB0D1",
+                              onSurfaceDisabled: "#534DB3",
+                            } as any,
+                          }}
+                          onPress={() => {}}
+                          label=""
+                          mode="flat"
+                          textStyle={{ color: "white" }}
+                          style={{ backgroundColor: "#BBB0D1" }}
+                          icon=""
+                          disabled={true}
+                        >
+                          <Text style={{ color: "#534DB3" }}>
+                            {selectedEntry?.title}
+                          </Text>
+                        </CChip>
+                      </View>
+                      <Text style={{ color: "#534DB3" }}>
+                        {selectedEntry?.content}
+                      </Text>
+                    </View>
+                  }
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  ></View>
+                </Modal>
+              </Portal>
+            </>
+          )}
           <CModal
             visible={visible}
             hideModal={hideModal}
@@ -363,7 +471,7 @@ const Home = () => {
               </View>
             </View>
           </CModal>
-          <View
+          <ScrollView
             style={{
               display: "flex",
               flexDirection: "column",
@@ -469,122 +577,10 @@ const Home = () => {
                         showDialog();
                       }}
                     />
-                    {details && (
-                      <>
-                        <Portal>
-                          <Modal
-                            style={{ width: "100%", padding: 10 }}
-                            visible={details}
-                            onDismiss={hideDetails}
-                            contentContainerStyle={containerStyle}
-                          >
-                            <CIconButton
-                              style={{ alignSelf: "flex-end" }}
-                              icon="close"
-                              iconColor="#534DB3"
-                              containerColor=""
-                              size={20}
-                              onPress={hideDetails}
-                            />
-                            {
-                              <View
-                                style={{
-                                  display: "flex",
-                                  width: "100%",
-                                  paddingBottom: 20,
-                                  paddingLeft: 20,
-                                  paddingRight: 20,
-                                  // height: "100%",
-                                }}
-                              >
-                                <View
-                                  style={{
-                                    display: "flex",
-                                    width: "100%",
-                                    flexDirection: "row",
-                                    justifyContent: "flex-start",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <CChip
-                                    onPress={() => {}}
-                                    label=""
-                                    mode="outlined"
-                                    icon=""
-                                    disabled={true}
-                                    textStyle={{}}
-                                    style={{
-                                      borderColor: "#534DB3", // ← directement dans style
-                                      borderWidth: 1,
-                                    }}
-                                  >
-                                    <Text style={{ color: "#534DB3" }}>
-                                      {formatDate(
-                                        selectedEntry?.date ??
-                                          formatDate(
-                                            new Date().toLocaleDateString(),
-                                          ),
-                                      )}
-                                    </Text>
-                                  </CChip>
-                                  <CIconButton
-                                    icon={`${
-                                      emotions[
-                                        (selectedEntry?.feeling ?? 1) - 1
-                                      ]
-                                    }-outline`}
-                                    iconColor="#534DB3"
-                                    containerColor=""
-                                    size={20}
-                                    onPress={() => {}}
-                                    disabled={true}
-                                    theme={{
-                                      colors: {
-                                        onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
-                                      },
-                                    }}
-                                  />
-                                  <CChip
-                                    theme={{
-                                      colors: {
-                                        surfaceDisabled: "#BBB0D1",
-                                        onSurfaceDisabled: "#534DB3",
-                                      } as any,
-                                    }}
-                                    onPress={() => {}}
-                                    label=""
-                                    mode="flat"
-                                    textStyle={{ color: "white" }}
-                                    style={{ backgroundColor: "#BBB0D1" }}
-                                    icon=""
-                                    disabled={true}
-                                  >
-                                    <Text style={{ color: "#534DB3" }}>
-                                      {selectedEntry?.title}
-                                    </Text>
-                                  </CChip>
-                                </View>
-                                <Text style={{ color: "#534DB3" }}>
-                                  {selectedEntry?.content}
-                                </Text>
-                              </View>
-                            }
-                            <View
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                              }}
-                            ></View>
-                          </Modal>
-                        </Portal>
-                      </>
-                    )}
                   </Pressable>
                 );
               })}
-          </View>
+          </ScrollView>
           <View
             style={{
               display: "flex",

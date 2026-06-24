@@ -4,36 +4,25 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import * as WebBrowser from "expo-web-browser";
 import auth from "../config/firebase";
 import { AuthProvider, useAuthContext } from "../context/AuthContext";
+import * as ScreenOrientation from "expo-screen-orientation";
+import { PaperProvider, MD3LightTheme } from "react-native-paper";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const RootLayoutNav = () => {
-  const { localLogin, loading } = useAuthContext();
-  const router = useRouter();
+  useEffect(() => {
+    ScreenOrientation.unlockAsync();
+  }, []);
 
-  // useEffect(() => {
-  //   if (loading) return; // ← attendre que Firebase soit prêt
-
-  //   if (!localLogin) {
-  //     router.replace("/signin");
-  //   } else {
-  //     router.replace("/home");
-  //   }
-  // }, [localLogin, loading]);
-
-  // if (loading) return null;
-  // headerShown : C'est l'option qui contrôle l'affichage de la barre de navigation en haut de l'écran.
-  return (
-    <AuthProvider>
-      <Stack screenOptions={{ headerShown: false }} />
-    </AuthProvider>
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 };
 
 const _ = () => {
   return (
     <AuthProvider>
-      <RootLayoutNav />
+      <PaperProvider theme={MD3LightTheme}>
+        <RootLayoutNav />
+      </PaperProvider>
     </AuthProvider>
   );
 };

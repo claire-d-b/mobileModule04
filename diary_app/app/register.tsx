@@ -15,7 +15,7 @@ interface Information {
   npassword: string;
 }
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 const Register = () => {
   const [login, setLogin] = useState("");
@@ -105,115 +105,110 @@ const Register = () => {
     }
   };
   return (
-    <SafeAreaView
-      style={{ flex: 1 }}
-      edges={["top", "bottom", "left", "right"]}
+    <View
+      style={{
+        width: "100%",
+        height: "100%",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View style={{ width: "100%", padding: 10 }}>
-          <CTextInput
-            secureTextEntry={false}
-            right={<></>}
-            onBlur={() => {}}
-            onChangeText={(text: string) => setLogin(text)}
-            label="login"
-            msg={login}
-            placeholder="Type your login"
-            variant="outlined"
-            textColor="#534DB3"
-            outlineColor="#534DB3"
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="#534DB3"
-            underlineColor="#534DB3"
-            activeUnderlineColor="#534DB3"
-            selectionColor="#534DB3"
-            contentStyle={{}}
-            style={{ width: "100%" }}
-            disabled={false}
-            multiline={false}
-          />
-          <CTextInput
-            secureTextEntry={secure}
-            right={
-              <TextInput.Icon
-                icon={secure ? "eye-off" : "eye"}
-                onPress={() => setSecure(!secure)}
-              />
-            }
-            onBlur={() => {}}
-            onChangeText={(secret) => setPassword(secret)}
-            label="password"
-            msg={password}
-            placeholder="Type your password"
-            variant="outlined"
-            textColor="#534DB3"
-            outlineColor="#534DB3"
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="#534DB3"
-            underlineColor="#534DB3"
-            activeUnderlineColor="#534DB3"
-            selectionColor="#534DB3"
-            contentStyle={{}}
-            style={{ width: "100%", borderRadius: 10 }}
-            disabled={false}
-            multiline={false}
-          />
-          <CTextInput
-            secureTextEntry={nsecure}
-            right={
-              <TextInput.Icon
-                icon={nsecure ? "eye-off" : "eye"}
-                onPress={() => setNSecure(!nsecure)}
-              />
-            }
-            onBlur={() => {}}
-            onChangeText={(nsecret) => setNPassword(nsecret)}
-            label="confirm password"
-            msg={npassword}
-            placeholder="confirm your password"
-            variant="outlined"
-            textColor="#534DB3"
-            outlineColor="#534DB3"
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="#534DB3"
-            underlineColor="#534DB3"
-            activeUnderlineColor="#534DB3"
-            selectionColor="#534DB3"
-            contentStyle={{}}
-            style={{ width: "100%", borderRadius: 10 }}
-            disabled={false}
-            multiline={false}
-          />
-          {error && <Text style={{ color: "red" }}>{error}</Text>}
-          <CButton
-            onPress={() => handleSubmit({ login, password, npassword })}
-            msg="Send"
-            variant="contained"
-            textColor="white"
-            style={{ display: "flex", alignSelf: "flex-end", marginTop: 20 }}
-            buttonColor="#534DB3"
-            labelStyle={{}}
-          />
-          <CButton
-            onPress={() => router.push("/signin")}
-            msg="Already registered ? Sign-in"
-            variant="text"
-            textColor="#534DB3"
-            style={{ display: "flex", alignSelf: "flex-end" }}
-            buttonColor="transparent"
-            labelStyle={{}}
-          />
-        </View>
+      <View style={{ width: "100%", padding: 10 }}>
+        <CTextInput
+          secureTextEntry={false}
+          right={<></>}
+          onBlur={() => {}}
+          onChangeText={(text: string) => setLogin(text)}
+          label="login"
+          msg={login}
+          placeholder="Type your login"
+          variant="outlined"
+          textColor="#534DB3"
+          outlineColor="#534DB3"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="#534DB3"
+          underlineColor="#534DB3"
+          activeUnderlineColor="#534DB3"
+          selectionColor="#534DB3"
+          contentStyle={{}}
+          style={{ width: "100%" }}
+          disabled={false}
+          multiline={false}
+        />
+        <CTextInput
+          secureTextEntry={secure}
+          right={
+            <TextInput.Icon
+              icon={secure ? "eye-off" : "eye"}
+              onPress={() => setSecure(!secure)}
+            />
+          }
+          onBlur={() => {}}
+          onChangeText={(secret) => setPassword(secret)}
+          label="password"
+          msg={password}
+          placeholder="Type your password"
+          variant="outlined"
+          textColor="#534DB3"
+          outlineColor="#534DB3"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="#534DB3"
+          underlineColor="#534DB3"
+          activeUnderlineColor="#534DB3"
+          selectionColor="#534DB3"
+          contentStyle={{}}
+          style={{ width: "100%", borderRadius: 10 }}
+          disabled={false}
+          multiline={false}
+        />
+        <CTextInput
+          secureTextEntry={nsecure}
+          right={
+            <TextInput.Icon
+              icon={nsecure ? "eye-off" : "eye"}
+              onPress={() => setNSecure(!nsecure)}
+            />
+          }
+          onBlur={() => {}}
+          onChangeText={(nsecret) => setNPassword(nsecret)}
+          label="confirm password"
+          msg={npassword}
+          placeholder="confirm your password"
+          variant="outlined"
+          textColor="#534DB3"
+          outlineColor="#534DB3"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="#534DB3"
+          underlineColor="#534DB3"
+          activeUnderlineColor="#534DB3"
+          selectionColor="#534DB3"
+          contentStyle={{}}
+          style={{ width: "100%", borderRadius: 10 }}
+          disabled={false}
+          multiline={false}
+        />
+        {error && <Text style={{ color: "red" }}>{error}</Text>}
+        <CButton
+          onPress={() => handleSubmit({ login, password, npassword })}
+          msg="Send"
+          variant="contained"
+          textColor="white"
+          style={{ display: "flex", alignSelf: "flex-end", marginTop: 20 }}
+          buttonColor="#534DB3"
+          labelStyle={{}}
+        />
+        <CButton
+          onPress={() => router.push("/signin")}
+          msg="Already registered ? Sign-in"
+          variant="text"
+          textColor="#534DB3"
+          style={{ display: "flex", alignSelf: "flex-end" }}
+          buttonColor="transparent"
+          labelStyle={{}}
+        />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -17,7 +17,7 @@ interface Information {
   password: string;
 }
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,123 +72,118 @@ const SignIn = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <SafeAreaView
-      style={{ flex: 1 }}
-      edges={["top", "bottom", "left", "right"]}
+    <View
+      style={{
+        width: "100%",
+        height: "100%",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View style={{ width: "100%", padding: 10 }}>
-          <CTextInput
-            secureTextEntry={false}
-            right={<></>}
-            onBlur={() => {}}
-            onChangeText={(text: string) => setLogin(text)}
-            label="login"
-            msg={login}
-            placeholder="Type your login"
-            variant="outlined"
-            textColor="#534DB3"
-            outlineColor="#534DB3"
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="#534DB3"
-            underlineColor="#534DB3"
-            activeUnderlineColor="#534DB3"
-            selectionColor="#534DB3"
-            contentStyle={{}}
-            style={{ width: "100%" }}
-            disabled={false}
-            multiline={false}
-          />
-          <CTextInput
-            secureTextEntry={secure}
-            right={
-              <TextInput.Icon
-                icon={secure ? "eye-off" : "eye"}
-                onPress={() => setSecure(!secure)}
-              />
-            }
-            onBlur={() => {}}
-            onChangeText={(text: string) => setPassword(text)}
-            label="password"
-            msg={password}
-            placeholder="Type your password"
-            variant="outlined"
-            textColor="#534DB3"
-            outlineColor="#534DB3"
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="#534DB3"
-            underlineColor="#534DB3"
-            activeUnderlineColor="#534DB3"
-            selectionColor="#534DB3"
-            contentStyle={{}}
-            style={{ width: "100%" }}
-            disabled={false}
-            multiline={false}
-          />
-          {error ? (
-            <CButton
-              msg={error}
-              variant="text"
-              textColor="red"
-              style={{}}
-              buttonColor="transparent"
-              labelStyle={{}}
-              onPress={() => {}}
+      <View style={{ width: "100%", padding: 10 }}>
+        <CTextInput
+          secureTextEntry={false}
+          right={<></>}
+          onBlur={() => {}}
+          onChangeText={(text: string) => setLogin(text)}
+          label="login"
+          msg={login}
+          placeholder="Type your login"
+          variant="outlined"
+          textColor="#534DB3"
+          outlineColor="#534DB3"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="#534DB3"
+          underlineColor="#534DB3"
+          activeUnderlineColor="#534DB3"
+          selectionColor="#534DB3"
+          contentStyle={{}}
+          style={{ width: "100%" }}
+          disabled={false}
+          multiline={false}
+        />
+        <CTextInput
+          secureTextEntry={secure}
+          right={
+            <TextInput.Icon
+              icon={secure ? "eye-off" : "eye"}
+              onPress={() => setSecure(!secure)}
             />
-          ) : null}
+          }
+          onBlur={() => {}}
+          onChangeText={(text: string) => setPassword(text)}
+          label="password"
+          msg={password}
+          placeholder="Type your password"
+          variant="outlined"
+          textColor="#534DB3"
+          outlineColor="#534DB3"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="#534DB3"
+          underlineColor="#534DB3"
+          activeUnderlineColor="#534DB3"
+          selectionColor="#534DB3"
+          contentStyle={{}}
+          style={{ width: "100%" }}
+          disabled={false}
+          multiline={false}
+        />
+        {error ? (
           <CButton
-            onPress={() => handleSubmit({ login, password })}
-            msg="Send"
-            variant="contained"
-            textColor="white"
-            style={{ display: "flex", alignSelf: "flex-end", marginTop: 20 }}
-            buttonColor="#534DB3"
-            labelStyle={{}}
-          />
-          <CButton
-            onPress={() => router.push("/register")}
-            msg="Not registered yet ? Create an account"
+            msg={error}
             variant="text"
-            textColor="#534DB3"
-            style={{ display: "flex", alignSelf: "flex-end" }}
+            textColor="red"
+            style={{}}
             buttonColor="transparent"
             labelStyle={{}}
+            onPress={() => {}}
           />
-          <CButton
-            onPress={() => {
-              setIsLoading(true); // ← affiche loading avant d'ouvrir le navigateur
-              googleRequest && googlePrompt();
-            }}
-            msg="Connect with Google"
-            variant="text"
-            textColor="gray"
-            style={{ display: "flex", alignSelf: "flex-end" }}
-            buttonColor="transparent"
-            labelStyle={{}}
-          />
-          <CButton
-            onPress={() => {
-              setIsLoading(true);
-              githubRequest && githubPrompt();
-            }}
-            msg="Connect with Github"
-            variant="text"
-            textColor="gray"
-            style={{ display: "flex", alignSelf: "flex-end" }}
-            buttonColor="transparent"
-            labelStyle={{}}
-          />
-        </View>
+        ) : null}
+        <CButton
+          onPress={() => handleSubmit({ login, password })}
+          msg="Send"
+          variant="contained"
+          textColor="white"
+          style={{ display: "flex", alignSelf: "flex-end", marginTop: 20 }}
+          buttonColor="#534DB3"
+          labelStyle={{}}
+        />
+        <CButton
+          onPress={() => router.push("/register")}
+          msg="Not registered yet ? Create an account"
+          variant="text"
+          textColor="#534DB3"
+          style={{ display: "flex", alignSelf: "flex-end" }}
+          buttonColor="transparent"
+          labelStyle={{}}
+        />
+        <CButton
+          onPress={() => {
+            setIsLoading(true); // ← affiche loading avant d'ouvrir le navigateur
+            googleRequest && googlePrompt();
+          }}
+          msg="Connect with Google"
+          variant="text"
+          textColor="gray"
+          style={{ display: "flex", alignSelf: "flex-end" }}
+          buttonColor="transparent"
+          labelStyle={{}}
+        />
+        <CButton
+          onPress={() => {
+            setIsLoading(true);
+            githubRequest && githubPrompt();
+          }}
+          msg="Connect with Github"
+          variant="text"
+          textColor="gray"
+          style={{ display: "flex", alignSelf: "flex-end" }}
+          buttonColor="transparent"
+          labelStyle={{}}
+        />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
