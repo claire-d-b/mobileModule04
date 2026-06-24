@@ -11,17 +11,17 @@ const RootLayoutNav = () => {
   const { localLogin, loading } = useAuthContext();
   const router = useRouter();
 
-  useEffect(() => {
-    if (loading) return; // ← attendre que Firebase soit prêt
+  // useEffect(() => {
+  //   if (loading) return; // ← attendre que Firebase soit prêt
 
-    if (!localLogin) {
-      router.replace("/signin");
-    } else {
-      router.replace("/home");
-    }
-  }, [localLogin, loading]);
+  //   if (!localLogin) {
+  //     router.replace("/signin");
+  //   } else {
+  //     router.replace("/home");
+  //   }
+  // }, [localLogin, loading]);
 
-  if (loading) return null;
+  // if (loading) return null;
   // headerShown : C'est l'option qui contrôle l'affichage de la barre de navigation en haut de l'écran.
   return (
     <AuthProvider>

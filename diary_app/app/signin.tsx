@@ -10,6 +10,7 @@ import useGoogleAuth from "../auth/auth_google";
 import useGithubAuth from "../auth/auth_github";
 import CTextInput from "./CTextInput";
 import CButton from "./CButton";
+import Loading from "./loading";
 
 interface Information {
   login: string;
@@ -19,6 +20,7 @@ interface Information {
 const backendUrl = "http://192.168.1.192:3000";
 
 const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [secure, setSecure] = useState(true);
@@ -29,6 +31,7 @@ const SignIn = () => {
   const { setLocalLogin } = useAuthContext(); // ← ajoute ça
   const handleSubmit = async ({ login, password }: Information) => {
     setError("");
+    setIsLoading(true); // ← affiche loading
     try {
       // 1. Appel backend
       const res = await fetch(`${backendUrl}/user/login`, {
@@ -41,6 +44,7 @@ const SignIn = () => {
       if (!res.ok) {
         setError(data.error || "Login failed");
         console.error("❌ Login failed:", data.error);
+        setIsLoading(false); // ← cache loading si erreur
         return;
       }
 
@@ -62,8 +66,10 @@ const SignIn = () => {
     } catch (err) {
       console.error("❌ Error during login:", err);
       setError("An error occurred");
+      setIsLoading(false); // ← cache loading si erreur
     }
   };
+  if (isLoading) return <Loading />;
 
   return (
     <SafeAreaView
@@ -157,7 +163,10 @@ const SignIn = () => {
             labelStyle={{}}
           />
           <CButton
-            onPress={() => googleRequest && googlePrompt()}
+            onPress={() => {
+              setIsLoading(true); // ← affiche loading avant d'ouvrir le navigateur
+              googleRequest && googlePrompt();
+            }}
             msg="Connect with Google"
             variant="text"
             textColor="gray"
@@ -166,7 +175,10 @@ const SignIn = () => {
             labelStyle={{}}
           />
           <CButton
-            onPress={() => githubRequest && githubPrompt()}
+            onPress={() => {
+              setIsLoading(true);
+              githubRequest && githubPrompt();
+            }}
             msg="Connect with Github"
             variant="text"
             textColor="gray"
