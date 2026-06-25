@@ -17,7 +17,7 @@ interface Information {
   password: string;
 }
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "http://192.168.1.39:3000";
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -161,7 +161,13 @@ const SignIn = () => {
         <CButton
           onPress={() => {
             setIsLoading(true); // ← affiche loading avant d'ouvrir le navigateur
-            googleRequest && googlePrompt();
+            googleRequest &&
+              googlePrompt().then((result) => {
+                // Si l'utilisateur annule ou si ça échoue, on remet isLoading à false
+                if (result?.type !== "success") {
+                  setIsLoading(false);
+                }
+              });
           }}
           msg="Connect with Google"
           variant="text"
@@ -173,7 +179,12 @@ const SignIn = () => {
         <CButton
           onPress={() => {
             setIsLoading(true);
-            githubRequest && githubPrompt();
+            githubRequest &&
+              githubPrompt().then((result) => {
+                if (result?.type !== "success") {
+                  setIsLoading(false);
+                }
+              });
           }}
           msg="Connect with Github"
           variant="text"
