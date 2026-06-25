@@ -266,8 +266,9 @@ const Home = () => {
               width: "100%",
               display: "flex",
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: isLandscape ? "flex-start" : "center",
               alignItems: "center",
+              padding: 20,
             }}
           >
             <CAvatar
@@ -278,10 +279,12 @@ const Home = () => {
             />
             <Text style={{ padding: 20, color: "#353172" }}>{email}</Text>
           </View>
-          <Text style={{ color: "#353172", padding: 40 }}>
-            Add a new entry to your diary by clicking Add entry. You can click
-            on a specific entry in the below list to get details.
-          </Text>
+          {!isLandscape && (
+            <Text style={{ color: "#353172", padding: 40 }}>
+              Add a new entry to your diary by clicking Add entry. You can click
+              on a specific entry in the below list to get details.
+            </Text>
+          )}
           {details && (
             <>
               <Portal>
@@ -492,12 +495,10 @@ const Home = () => {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
-                padding: 20,
+                paddingVertical: 20,
               }}
               contentContainerStyle={{
-                paddingTop: 20,
-                paddingBottom: 60,
-                paddingHorizontal: 10,
+                paddingHorizontal: 40,
                 flexGrow: 1, // ← permet au contenu de grandir
                 gap: 10,
               }}
@@ -512,7 +513,7 @@ const Home = () => {
                       style={{
                         width: "100%", // ← ajoute ça
                         flexDirection: "row",
-                        // marginVertical: isLandscape ? 2.5 : 20,
+                        // marginVertical: isLandscape ? 20 : 0,
                         padding: 5,
                         justifyContent: "center",
                         alignItems: "center",
@@ -603,6 +604,37 @@ const Home = () => {
                     </Pressable>
                   );
                 })}
+              {isLandscape && (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {hasPrev && (
+                    <CIconButton
+                      style={{ alignSelf: "center", marginBottom: 40 }}
+                      icon="chevron-left"
+                      iconColor="#534DB3"
+                      containerColor=""
+                      size={25}
+                      onPress={loadLess}
+                    />
+                  )}
+                  {hasNext && (
+                    <CIconButton
+                      style={{ alignSelf: "center", marginBottom: 40 }}
+                      icon="chevron-right"
+                      iconColor="#534DB3"
+                      containerColor=""
+                      size={25}
+                      onPress={loadMore}
+                    />
+                  )}
+                </View>
+              )}
             </ScrollView>
             <View
               style={{
@@ -624,7 +656,7 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            {hasPrev && (
+            {!isLandscape && hasPrev && (
               <CIconButton
                 icon="chevron-left"
                 iconColor="#534DB3"
@@ -633,7 +665,7 @@ const Home = () => {
                 onPress={loadLess}
               />
             )}
-            {hasNext && (
+            {!isLandscape && hasNext && (
               <CIconButton
                 icon="chevron-right"
                 iconColor="#534DB3"

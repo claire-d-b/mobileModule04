@@ -105,7 +105,7 @@ const CModal = ({
         variant="contained"
         textColor="white"
         labelStyle=""
-        style={{ marginTop: 3 }}
+        style={{ marginVertical: 5, marginRight: 40, alignSelf: "flex-end" }}
         buttonColor="#534DB3"
         onPress={showModal}
       />
