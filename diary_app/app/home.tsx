@@ -265,7 +265,6 @@ const Home = () => {
               flexDirection: "row",
               justifyContent: isLandscape ? "flex-start" : "center",
               alignItems: "center",
-              // padding: 20,
             }}
           >
             <CAvatar
@@ -583,6 +582,7 @@ const Home = () => {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  marginBottom: 20,
                 }}
               >
                 {hasPrev && (
@@ -608,7 +608,7 @@ const Home = () => {
               </View>
             )}
           </ScrollView>
-          <View
+          {/* <View
             style={{
               position: "absolute",
               right: 3,
@@ -618,7 +618,7 @@ const Home = () => {
               backgroundColor: "#BBB0D1",
               borderRadius: 2,
             }}
-          />
+          /> */}
         </View>
         <View
           style={{

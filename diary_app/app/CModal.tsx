@@ -7,7 +7,7 @@ import {
   PaperProvider,
   IconButton,
 } from "react-native-paper";
-import { StyleProp, ViewStyle, View } from "react-native";
+import { StyleProp, ViewStyle, View, useWindowDimensions } from "react-native";
 import CButton from "./CButton";
 import CIconButton from "./CIconButton";
 
@@ -33,6 +33,8 @@ const CModal = ({
   style,
   children,
 }: Props) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
   const containerStyle = {
     backgroundColor: "white",
     // padding: 20,
@@ -105,7 +107,11 @@ const CModal = ({
         variant="contained"
         textColor="white"
         labelStyle=""
-        style={{ marginRight: 40, alignSelf: "flex-end" }}
+        style={{
+          marginRight: 40,
+          marginBottom: isLandscape ? 10 : 0,
+          alignSelf: "flex-end",
+        }}
         buttonColor="#534DB3"
         onPress={showModal}
       />
