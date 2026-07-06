@@ -23,7 +23,10 @@ import type { MD3Colors } from "react-native-paper";
 import CButton from "./CButton";
 import { Background } from "@react-navigation/elements";
 
-const nbOfEntriesPerPage = 6;
+const getEllipsis = (text: string, maxLength: number): string => {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+};
 
 const emotions = [
   "emoticon",
@@ -290,101 +293,104 @@ const Home = () => {
                   onDismiss={hideDetails}
                   contentContainerStyle={containerStyle}
                 >
-                  <CIconButton
-                    style={{ alignSelf: "flex-end" }}
-                    icon="close"
-                    iconColor="#534DB3"
-                    containerColor=""
-                    size={20}
-                    onPress={hideDetails}
-                  />
-                  {
-                    <View
-                      style={{
-                        display: "flex",
-                        width: "100%",
-                        paddingBottom: 20,
-                        paddingLeft: 20,
-                        paddingRight: 20,
-                        // height: "100%",
-                      }}
-                    >
+                  <ScrollView>
+                    <CIconButton
+                      style={{ alignSelf: "flex-end" }}
+                      icon="close"
+                      iconColor="#534DB3"
+                      containerColor=""
+                      size={20}
+                      onPress={hideDetails}
+                    />
+                    {
                       <View
                         style={{
                           display: "flex",
                           width: "100%",
-                          flexDirection: "row",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
+                          paddingBottom: 20,
+                          paddingLeft: 20,
+                          paddingRight: 20,
                         }}
                       >
-                        <CChip
-                          onPress={() => {}}
-                          label=""
-                          mode="outlined"
-                          icon=""
-                          disabled={true}
-                          textStyle={{}}
+                        <View
                           style={{
-                            borderColor: "#534DB3", // ← directement dans style
-                            borderWidth: 1,
+                            display: "flex",
+                            width: "100%",
+                            flexDirection: "row",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
                           }}
                         >
-                          <Text style={{ color: "#534DB3" }}>
-                            {formatDate(
-                              selectedEntry?.date ??
-                                formatDate(new Date().toLocaleDateString()),
-                            )}
-                          </Text>
-                        </CChip>
-                        <CIconButton
-                          icon={`${
-                            emotions[(selectedEntry?.feeling ?? 1) - 1]
-                          }-outline`}
-                          iconColor="#534DB3"
-                          containerColor=""
-                          size={20}
-                          onPress={() => {}}
-                          disabled={true}
-                          theme={{
-                            colors: {
-                              onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
-                            },
-                          }}
-                        />
-                        <CChip
-                          theme={{
-                            colors: {
-                              surfaceDisabled: "#BBB0D1",
-                              onSurfaceDisabled: "#534DB3",
-                            } as any,
-                          }}
-                          onPress={() => {}}
-                          label=""
-                          mode="flat"
-                          textStyle={{ color: "white" }}
-                          style={{ backgroundColor: "#BBB0D1" }}
-                          icon=""
-                          disabled={true}
-                        >
-                          <Text style={{ color: "#534DB3" }}>
-                            {selectedEntry?.title}
-                          </Text>
-                        </CChip>
+                          <CChip
+                            onPress={() => {}}
+                            label=""
+                            mode="outlined"
+                            icon=""
+                            disabled={true}
+                            textStyle={{}}
+                            style={{
+                              borderColor: "#534DB3", // ← directement dans style
+                              borderWidth: 1,
+                            }}
+                          >
+                            <Text style={{ color: "#534DB3" }}>
+                              {formatDate(
+                                selectedEntry?.date ??
+                                  formatDate(new Date().toLocaleDateString()),
+                              )}
+                            </Text>
+                          </CChip>
+                          <CIconButton
+                            icon={`${
+                              emotions[(selectedEntry?.feeling ?? 1) - 1]
+                            }-outline`}
+                            iconColor="#534DB3"
+                            containerColor=""
+                            size={20}
+                            onPress={() => {}}
+                            disabled={true}
+                            theme={{
+                              colors: {
+                                onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
+                              },
+                            }}
+                          />
+                          <CChip
+                            theme={{
+                              colors: {
+                                surfaceDisabled: "#BBB0D1",
+                                onSurfaceDisabled: "#534DB3",
+                              } as any,
+                            }}
+                            onPress={() => {}}
+                            label=""
+                            mode="flat"
+                            textStyle={{ color: "white" }}
+                            style={{ backgroundColor: "#BBB0D1" }}
+                            icon=""
+                            disabled={true}
+                          >
+                            <Text style={{ color: "#534DB3" }}>
+                              {(isLandscape &&
+                                getEllipsis(selectedEntry?.title ?? "", 80)) ||
+                                getEllipsis(selectedEntry?.title ?? "", 15)}
+                            </Text>
+                          </CChip>
+                        </View>
+                        <Text style={{ color: "#534DB3" }}>
+                          {selectedEntry?.content}
+                        </Text>
                       </View>
-                      <Text style={{ color: "#534DB3" }}>
-                        {selectedEntry?.content}
-                      </Text>
-                    </View>
-                  }
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  ></View>
+                    }
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    ></View>
+                  </ScrollView>
                 </Modal>
               </Portal>
             </>

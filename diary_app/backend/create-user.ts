@@ -164,6 +164,15 @@ const seedTestUser = async (): Promise<void> => {
         feeling: 3,
         content: "Post-holiday blues but the weather is nice. Could be worse.",
       },
+      // --- A very very long entry ---
+      {
+        date: "2026-05-20",
+        title:
+          "A very long entry for testing - A very long entry for testing - A very long entry for testing - A very long entry for testing",
+        feeling: 3,
+        content:
+          "I woke up this morning with no particular plan, which is rare for me, and I found myself just sitting by the window for almost half an hour, watching the light change as the sun came up over the rooftops across the street. There's something strange about days like this, days where nothing especially eventful happens, but where every small moment seems to stretch out and ask to be noticed. I made coffee, slower than usual, and I thought about how much of my life lately has been lived at a sprint, jumping from one task to the next without ever really landing anywhere. Today felt different. I spent the morning reading, actually reading, not skimming articles on my phone but sitting with an actual book for almost two hours, which I haven't done in longer than I'd like to admit. Around midday I went for a walk with no destination in mind, just to see where my feet would take me, and I ended up at a small park I'd never noticed before, tucked behind a row of buildings I must have passed a hundred times. There were kids playing some kind of game with chalk on the pavement, and an old man feeding pigeons from a bench, and for a while I just sat there and watched, not thinking about work or deadlines or any of the usual noise that fills my head. In the afternoon I called my sister, which I've been meaning to do for weeks, and we talked for almost an hour about nothing in particular — her new apartment, our parents, a show she's been watching — and it reminded me how easy it is to let relationships go quiet simply through inattention rather than any real falling out. By evening I cooked a proper meal instead of ordering something, and it took much longer than it needed to, but I didn't mind, there was something grounding about chopping vegetables and waiting for things to simmer rather than rushing toward the fastest possible outcome. I think what I'm trying to say, if I'm being honest with myself, is that today reminded me how much I've been running on autopilot lately, treating each day as a checklist to clear rather than something to actually experience. I don't know if I'll manage to hold onto this feeling tomorrow, or if by Monday I'll be back to rushing through everything without noticing much of it, but for tonight at least, I feel unusually present, and unusually at peace, and I wanted to write all of this down so that on some future rough day I can come back and remember that it's possible to slow down, even if just for one day, and that the slowing down itself was worth something.",
+      },
     ];
 
     for (const entry of entries) {
