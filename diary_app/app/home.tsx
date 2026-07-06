@@ -285,10 +285,10 @@ const Home = () => {
             </Text>
           )}
           {details && (
-            <>
+            <View>
               <Portal>
                 <Modal
-                  style={{ width: "100%", padding: 10 }}
+                  style={{ flex: 1, width: "100%", padding: 10 }}
                   visible={details}
                   onDismiss={hideDetails}
                   contentContainerStyle={containerStyle}
@@ -305,8 +305,7 @@ const Home = () => {
                     {
                       <View
                         style={{
-                          display: "flex",
-                          width: "100%",
+                          flex: 1,
                           paddingBottom: 20,
                           paddingLeft: 20,
                           paddingRight: 20,
@@ -314,9 +313,9 @@ const Home = () => {
                       >
                         <View
                           style={{
-                            display: "flex",
-                            width: "100%",
+                            flex: 1,
                             flexDirection: "row",
+                            flexWrap: "wrap",
                             justifyContent: "flex-start",
                             alignItems: "center",
                           }}
@@ -355,29 +354,19 @@ const Home = () => {
                               },
                             }}
                           />
-                          <CChip
-                            theme={{
-                              colors: {
-                                surfaceDisabled: "#BBB0D1",
-                                onSurfaceDisabled: "#534DB3",
-                              } as any,
+                          <View
+                            style={{
+                              backgroundColor: "#BBB0D1",
+                              padding: 20,
+                              borderRadius: 10,
                             }}
-                            onPress={() => {}}
-                            label=""
-                            mode="flat"
-                            textStyle={{ color: "white" }}
-                            style={{ backgroundColor: "#BBB0D1" }}
-                            icon=""
-                            disabled={true}
                           >
-                            <Text style={{ color: "#534DB3" }}>
-                              {(isLandscape &&
-                                getEllipsis(selectedEntry?.title ?? "", 80)) ||
-                                getEllipsis(selectedEntry?.title ?? "", 15)}
+                            <Text style={{ color: "#353172" }}>
+                              {selectedEntry?.title ?? ""}
                             </Text>
-                          </CChip>
+                          </View>
                         </View>
-                        <Text style={{ color: "#534DB3" }}>
+                        <Text style={{ color: "#534DB3", padding: 10 }}>
                           {selectedEntry?.content}
                         </Text>
                       </View>
@@ -393,7 +382,7 @@ const Home = () => {
                   </ScrollView>
                 </Modal>
               </Portal>
-            </>
+            </View>
           )}
           <CModal
             visible={visible}
@@ -401,31 +390,29 @@ const Home = () => {
             showModal={showModal}
             style={{ width: "100%", height: "100%" }}
           >
-            <View style={{ width: "100%", alignSelf: "flex-start" }}>
-              <CTextInput
-                secureTextEntry={false}
-                right={<></>}
-                onBlur={() => {}}
-                onChangeText={(str) => {
-                  setTitle(str);
-                }}
-                label="Title"
-                msg={title}
-                placeholder="Please add a title"
-                variant="outlined"
-                textColor="#534DB3"
-                outlineColor="#534DB3"
-                outlineStyle={{ borderRadius: 10 }}
-                activeOutlineColor="#534DB3"
-                underlineColor="#534DB3"
-                activeUnderlineColor="#534DB3"
-                selectionColor="#534DB3"
-                contentStyle={{}}
-                style={{ marginHorizontal: 20, backgroundColor: "white" }}
-                disabled={false}
-                multiline={false}
-              />
-            </View>
+            <CTextInput
+              secureTextEntry={false}
+              right={<></>}
+              onBlur={() => {}}
+              onChangeText={(str) => {
+                setTitle(str);
+              }}
+              label="Title"
+              msg={title}
+              placeholder="Please add a title"
+              variant="outlined"
+              textColor="#534DB3"
+              outlineColor="#534DB3"
+              outlineStyle={{ borderRadius: 10 }}
+              activeOutlineColor="#534DB3"
+              underlineColor="#534DB3"
+              activeUnderlineColor="#534DB3"
+              selectionColor="#534DB3"
+              contentStyle={{}}
+              style={{ marginHorizontal: 20, backgroundColor: "white" }}
+              disabled={false}
+              multiline={false}
+            />
             <View style={{ display: "flex", width: "100%" }}>
               <CRating
                 setRating={setFeeling}
@@ -443,241 +430,241 @@ const Home = () => {
                 alignItems: "center",
               }}
             >
-              <View
+              {/* <View
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "100%",
+                }} */}
+
+              <CTextInput
+                secureTextEntry={false}
+                right={<></>}
+                onBlur={() => {}}
+                onChangeText={(str) => {
+                  setContent(str);
                 }}
-              >
-                <CTextInput
-                  secureTextEntry={false}
-                  right={<></>}
-                  onBlur={() => {}}
-                  onChangeText={(str) => {
-                    setContent(str);
-                  }}
-                  label="Content"
-                  msg={content}
-                  placeholder="Please add entries"
-                  variant="outlined"
-                  textColor="#534DB3"
-                  outlineColor="#534DB3"
-                  outlineStyle={{ borderRadius: 10 }}
-                  activeOutlineColor="#534DB3"
-                  underlineColor="#534DB3"
-                  activeUnderlineColor="#534DB3"
-                  selectionColor="#534DB3"
-                  contentStyle={{}}
-                  style={{ marginHorizontal: 20, backgroundColor: "white" }}
-                  disabled={false}
-                  multiline={true}
-                />
-              </View>
-              <View style={{ alignSelf: "flex-end", marginRight: 20 }}>
-                <CIconButton
-                  icon="plus"
-                  iconColor="white"
-                  containerColor="#534DB3"
-                  size={20}
-                  onPress={handleSubmit}
-                />
-              </View>
+                label="Content"
+                msg={content}
+                placeholder="Please add entries"
+                variant="outlined"
+                textColor="#534DB3"
+                outlineColor="#534DB3"
+                outlineStyle={{ borderRadius: 10 }}
+                activeOutlineColor="#534DB3"
+                underlineColor="#534DB3"
+                activeUnderlineColor="#534DB3"
+                selectionColor="#534DB3"
+                contentStyle={{}}
+                style={{ backgroundColor: "white" }}
+                disabled={true}
+                multiline={true}
+              />
             </View>
+            <View style={{ alignSelf: "flex-end", marginRight: 20 }}>
+              <CIconButton
+                icon="plus"
+                iconColor="white"
+                containerColor="#534DB3"
+                size={20}
+                onPress={handleSubmit}
+              />
+            </View>
+            {/* </View> */}
           </CModal>
-          <View
+          {/* <View
             style={{
               width: "100%",
               flex: 1,
               overflow: "hidden",
             }}
-          >
-            <ScrollView
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                paddingVertical: 20,
-              }}
-              contentContainerStyle={{
-                paddingHorizontal: 40,
-                flexGrow: 1, // ← permet au contenu de grandir
-                gap: 10,
-              }}
-              showsVerticalScrollIndicator={false} // cache la barre native
-            >
-              {entries &&
-                entries.length > 0 &&
-                entries.map((e, i) => {
-                  return (
-                    <Pressable
-                      key={`entry_${i}`}
-                      style={{
-                        width: "100%", // ← ajoute ça
-                        flexDirection: "row",
-                        // marginVertical: isLandscape ? 20 : 0,
-                        padding: 5,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: pressed[i] ? "#534DB3" : "#BBB0D1",
-                        borderRadius: 10,
-                      }}
-                      onPressIn={() => {
-                        setPressed((prev) =>
-                          prev.map((v, idx) => (idx === i ? true : v)),
-                        );
-                      }}
-                      onPressOut={() => {
-                        setPressed((prev) =>
-                          prev.map((v, idx) => (idx === i ? false : v)),
-                        );
-                        setSelectedIndex(i);
-                        showDetails();
-                      }}
-                    >
-                      <View
-                        style={{
-                          backgroundColor: "white",
-                          borderRadius: 10,
-                          margin: 5,
-                        }}
-                      >
-                        <CChip
-                          theme={{
-                            colors: {
-                              surfaceDisabled: "#BBB0D1",
-                              onSurfaceDisabled: "#534DB3",
-                            } as any,
-                          }}
-                          onPress={() => {}}
-                          label=""
-                          mode="outlined"
-                          textStyle={{ color: "#534DB3" }}
-                          style={{}}
-                          icon=""
-                          disabled={true}
-                        >
-                          <Text style={{ color: "#534DB3" }}>
-                            {formatDate(e.date)}
-                          </Text>
-                        </CChip>
-                      </View>
-                      <CIconButton
-                        icon={emotions[(e.feeling ?? 1) - 1]}
-                        iconColor="#534DB3"
-                        containerColor=""
-                        size={20}
-                        onPress={() => {}}
-                        disabled={true}
-                        theme={{
-                          colors: {
-                            onSurfaceDisabled: "white", // ← couleur de l'icône quand disabled
-                          },
-                        }}
-                      />
-                      <View
-                        style={{
-                          flex: 1,
-                          overflow: "hidden",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <Text
-                          style={{
-                            flex: 1,
-                            color: pressed[i] ? "white" : "#353172",
-                          }}
-                          numberOfLines={1}
-                          ellipsizeMode="tail"
-                        >
-                          {e.title}
-                        </Text>
-                      </View>
-                      <CIconButton
-                        icon="trash-can-outline"
-                        iconColor={pressed[i] ? "white" : "#534DB3"}
-                        containerColor="transparent"
-                        size={20}
-                        onPress={() => {
-                          setEntryToDelete(e.id); // ← stocke le bon id
-                          showDialog();
-                        }}
-                      />
-                    </Pressable>
-                  );
-                })}
-              {isLandscape && (
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {hasPrev && (
-                    <CIconButton
-                      style={{ alignSelf: "center", marginBottom: 40 }}
-                      icon="chevron-left"
-                      iconColor="#534DB3"
-                      containerColor=""
-                      size={25}
-                      onPress={loadLess}
-                    />
-                  )}
-                  {hasNext && (
-                    <CIconButton
-                      style={{ alignSelf: "center", marginBottom: 40 }}
-                      icon="chevron-right"
-                      iconColor="#534DB3"
-                      containerColor=""
-                      size={25}
-                      onPress={loadMore}
-                    />
-                  )}
-                </View>
-              )}
-            </ScrollView>
-            <View
-              style={{
-                position: "absolute",
-                right: 3,
-                top: 3,
-                bottom: 3,
-                width: 4,
-                backgroundColor: "#BBB0D1",
-                borderRadius: 2,
-              }}
-            />
-          </View>
-          <View
+          > */}
+          <ScrollView
             style={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
+              flexDirection: "column",
+              width: "100%",
+              paddingVertical: 20,
             }}
+            contentContainerStyle={{
+              paddingHorizontal: 40,
+              flexGrow: 1, // ← permet au contenu de grandir
+              gap: 10,
+            }}
+            showsVerticalScrollIndicator={false} // cache la barre native
           >
-            {!isLandscape && hasPrev && (
-              <CIconButton
-                icon="chevron-left"
-                iconColor="#534DB3"
-                containerColor=""
-                size={25}
-                onPress={loadLess}
-              />
+            {entries &&
+              entries.length > 0 &&
+              entries.map((e, i) => {
+                return (
+                  <Pressable
+                    key={`entry_${i}`}
+                    style={{
+                      width: "100%", // ← ajoute ça
+                      flexDirection: "row",
+                      // marginVertical: isLandscape ? 20 : 0,
+                      padding: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: pressed[i] ? "#534DB3" : "#BBB0D1",
+                      borderRadius: 10,
+                    }}
+                    onPressIn={() => {
+                      setPressed((prev) =>
+                        prev.map((v, idx) => (idx === i ? true : v)),
+                      );
+                    }}
+                    onPressOut={() => {
+                      setPressed((prev) =>
+                        prev.map((v, idx) => (idx === i ? false : v)),
+                      );
+                      setSelectedIndex(i);
+                      showDetails();
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 10,
+                        margin: 5,
+                      }}
+                    >
+                      <CChip
+                        theme={{
+                          colors: {
+                            surfaceDisabled: "#BBB0D1",
+                            onSurfaceDisabled: "#534DB3",
+                          } as any,
+                        }}
+                        onPress={() => {}}
+                        label=""
+                        mode="outlined"
+                        textStyle={{ color: "#534DB3" }}
+                        style={{}}
+                        icon=""
+                        disabled={true}
+                      >
+                        <Text style={{ color: "#534DB3" }}>
+                          {formatDate(e.date)}
+                        </Text>
+                      </CChip>
+                    </View>
+                    <CIconButton
+                      icon={emotions[(e.feeling ?? 1) - 1]}
+                      iconColor="#534DB3"
+                      containerColor=""
+                      size={20}
+                      onPress={() => {}}
+                      disabled={true}
+                      theme={{
+                        colors: {
+                          onSurfaceDisabled: "white", // ← couleur de l'icône quand disabled
+                        },
+                      }}
+                    />
+                    <View
+                      style={{
+                        flex: 1,
+                        overflow: "hidden",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          flex: 1,
+                          color: pressed[i] ? "white" : "#353172",
+                        }}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
+                        {e.title}
+                      </Text>
+                    </View>
+                    <CIconButton
+                      icon="trash-can-outline"
+                      iconColor={pressed[i] ? "white" : "#534DB3"}
+                      containerColor="transparent"
+                      size={20}
+                      onPress={() => {
+                        setEntryToDelete(e.id); // ← stocke le bon id
+                        showDialog();
+                      }}
+                    />
+                  </Pressable>
+                );
+              })}
+            {isLandscape && (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {hasPrev && (
+                  <CIconButton
+                    style={{ alignSelf: "center", marginBottom: 40 }}
+                    icon="chevron-left"
+                    iconColor="#534DB3"
+                    containerColor=""
+                    size={25}
+                    onPress={loadLess}
+                  />
+                )}
+                {hasNext && (
+                  <CIconButton
+                    style={{ alignSelf: "center", marginBottom: 40 }}
+                    icon="chevron-right"
+                    iconColor="#534DB3"
+                    containerColor=""
+                    size={25}
+                    onPress={loadMore}
+                  />
+                )}
+              </View>
             )}
-            {!isLandscape && hasNext && (
-              <CIconButton
-                icon="chevron-right"
-                iconColor="#534DB3"
-                containerColor=""
-                size={25}
-                onPress={loadMore}
-              />
-            )}
-          </View>
+          </ScrollView>
+          <View
+            style={{
+              position: "absolute",
+              right: 3,
+              top: 3,
+              bottom: 3,
+              width: 4,
+              backgroundColor: "#BBB0D1",
+              borderRadius: 2,
+            }}
+          />
         </View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          {!isLandscape && hasPrev && (
+            <CIconButton
+              icon="chevron-left"
+              iconColor="#534DB3"
+              containerColor=""
+              size={25}
+              onPress={loadLess}
+            />
+          )}
+          {!isLandscape && hasNext && (
+            <CIconButton
+              icon="chevron-right"
+              iconColor="#534DB3"
+              containerColor=""
+              size={25}
+              onPress={loadMore}
+            />
+          )}
+        </View>
+        {/* </View> */}
         <CDialog
           visibleDialog={visibleDialog}
           setVisibleDialog={setVisibleDialog}

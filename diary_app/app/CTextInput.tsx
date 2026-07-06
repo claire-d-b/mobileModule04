@@ -5,21 +5,21 @@ import { GestureResponderEvent } from "react-native";
 interface Props {
   secureTextEntry: boolean | undefined;
   right: React.ReactNode;
-  onBlur: (args: any) => void;
-  onChangeText: (text: string) => void;
+  onBlur?: (args: any) => void;
+  onChangeText?: (text: string) => void;
   label: string;
   msg: string;
-  placeholder: string;
+  placeholder?: string;
   variant: "flat" | "outlined";
   textColor: string;
-  outlineColor: string;
-  outlineStyle: {};
-  activeOutlineColor: string;
-  underlineColor: string;
-  activeUnderlineColor: string;
-  selectionColor: string;
-  contentStyle: {};
-  style: {};
+  outlineColor?: string;
+  outlineStyle?: {};
+  activeOutlineColor?: string;
+  underlineColor?: string;
+  activeUnderlineColor?: string;
+  selectionColor?: string;
+  contentStyle?: {};
+  style?: {};
   disabled: boolean | undefined;
   multiline: boolean | undefined;
 }
@@ -43,7 +43,7 @@ export default function CTextInput({
   contentStyle,
   style,
   disabled,
-  multiline
+  multiline,
 }: Props) {
   return (
     <TextInput
