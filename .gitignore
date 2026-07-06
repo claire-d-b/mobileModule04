@@ -4,8 +4,10 @@ diary_app/tsconfig.json
 diary_app/.expo
 diary_app/expo-env.d.ts
 diary_app/android
+diary_app/ios
 diary_app/GoogleService-Info.plist
 diary_app/backend/node_modules
+diary_app/backend/package-lock.json
 diary_app/.env
 diary_app/backend/.env
 
