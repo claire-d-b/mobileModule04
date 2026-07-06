@@ -9,19 +9,11 @@ import { PaperProvider, MD3LightTheme } from "react-native-paper";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const RootLayoutNav = () => {
-  useEffect(() => {
-    ScreenOrientation.unlockAsync();
-  }, []);
-
-  return <Stack screenOptions={{ headerShown: false }} />;
-};
-
 const _ = () => {
   return (
     <AuthProvider>
       <PaperProvider theme={MD3LightTheme}>
-        <RootLayoutNav />
+        <Stack screenOptions={{ headerShown: false }} />
       </PaperProvider>
     </AuthProvider>
   );

@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [localLogin, setLocalLoginState] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true); // ← nouveau
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const auth = getAuth();
