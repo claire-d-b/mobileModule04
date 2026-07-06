@@ -254,10 +254,8 @@ const Home = () => {
           style={{
             flex: 1,
             width: "100%",
-            // height: "100%",
             flexDirection: "column",
             alignItems: "center",
-            // justifyContent: "space-around",
           }}
         >
           <View
@@ -641,7 +639,7 @@ const Home = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
