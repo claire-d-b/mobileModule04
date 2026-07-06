@@ -35,8 +35,8 @@ const CModal = ({
 }: Props) => {
   const containerStyle = {
     backgroundColor: "white",
-    padding: 20,
-    margin: 10,
+    // padding: 20,
+    // margin: 10,
     borderRadius: 10,
   };
 
@@ -105,7 +105,7 @@ const CModal = ({
         variant="contained"
         textColor="white"
         labelStyle=""
-        style={{ marginVertical: 5, marginRight: 40, alignSelf: "flex-end" }}
+        style={{ marginRight: 40, alignSelf: "flex-end" }}
         buttonColor="#534DB3"
         onPress={showModal}
       />

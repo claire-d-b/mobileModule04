@@ -265,7 +265,7 @@ const Home = () => {
               flexDirection: "row",
               justifyContent: isLandscape ? "flex-start" : "center",
               alignItems: "center",
-              padding: 20,
+              // padding: 20,
             }}
           >
             <CAvatar
@@ -277,7 +277,7 @@ const Home = () => {
             <Text style={{ padding: 20, color: "#353172" }}>{email}</Text>
           </View>
           {!isLandscape && (
-            <Text style={{ color: "#353172", padding: 40 }}>
+            <Text style={{ color: "#353172", padding: 20 }}>
               Add a new entry to your diary by clicking Add entry. You can click
               on a specific entry in the below list to get details.
             </Text>
@@ -407,7 +407,7 @@ const Home = () => {
               activeUnderlineColor="#534DB3"
               selectionColor="#534DB3"
               contentStyle={{}}
-              style={{ marginHorizontal: 20, backgroundColor: "white" }}
+              style={{ backgroundColor: "white" }}
               disabled={false}
               multiline={false}
             />
@@ -428,13 +428,6 @@ const Home = () => {
                 alignItems: "center",
               }}
             >
-              {/* <View
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                }} */}
-
               <CTextInput
                 secureTextEntry={false}
                 right={<></>}
@@ -468,15 +461,7 @@ const Home = () => {
                 onPress={handleSubmit}
               />
             </View>
-            {/* </View> */}
           </CModal>
-          {/* <View
-            style={{
-              width: "100%",
-              flex: 1,
-              overflow: "hidden",
-            }}
-          > */}
           <ScrollView
             style={{
               display: "flex",
@@ -486,10 +471,10 @@ const Home = () => {
             }}
             contentContainerStyle={{
               paddingHorizontal: 40,
-              flexGrow: 1, // ← permet au contenu de grandir
+              flexGrow: 1, // permet au contenu de grandir
               gap: 10,
             }}
-            showsVerticalScrollIndicator={false} // cache la barre native
+            // showsVerticalScrollIndicator={false} // cache la barre native
           >
             {entries &&
               entries.length > 0 &&
@@ -602,7 +587,7 @@ const Home = () => {
               >
                 {hasPrev && (
                   <CIconButton
-                    style={{ alignSelf: "center", marginBottom: 40 }}
+                    style={{ alignSelf: "center" }}
                     icon="chevron-left"
                     iconColor="#534DB3"
                     containerColor=""
@@ -612,7 +597,7 @@ const Home = () => {
                 )}
                 {hasNext && (
                   <CIconButton
-                    style={{ alignSelf: "center", marginBottom: 40 }}
+                    style={{ alignSelf: "center" }}
                     icon="chevron-right"
                     iconColor="#534DB3"
                     containerColor=""
@@ -662,7 +647,6 @@ const Home = () => {
             />
           )}
         </View>
-        {/* </View> */}
         <CDialog
           visibleDialog={visibleDialog}
           setVisibleDialog={setVisibleDialog}
