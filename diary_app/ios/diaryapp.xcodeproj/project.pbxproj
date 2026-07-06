@@ -8,25 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2B273C37B8839CE9C105C744 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477974EC9B02B11F2ED839B1 /* ExpoModulesProvider.swift */; };
+		2837F788CBE7634CFBFB3BB9 /* libPods-diaryapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		9F130C7D4FA99D295BF5FF4A /* libPods-diaryapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 679FE6057A302B10E02C493B /* libPods-diaryapp.a */; };
+		867F27DC5F7EADB400C2DAF6 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D2919D74D22D79CAE7714E17 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7C7421F65D660BD0739A6710 /* PrivacyInfo.xcprivacy */; };
+		D97C9F87900BC6E812D11371 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0202FCA8C461D09E220F8CC7 /* Pods-diaryapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.release.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* diaryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = diaryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = diaryapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = diaryapp/Info.plist; sourceTree = "<group>"; };
-		37C0EF17C272C5EEC287637F /* Pods-diaryapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.debug.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.debug.xcconfig"; sourceTree = "<group>"; };
-		477974EC9B02B11F2ED839B1 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-diaryapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		679FE6057A302B10E02C493B /* libPods-diaryapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-diaryapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C7421F65D660BD0739A6710 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = diaryapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-diaryapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = diaryapp/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.release.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.release.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = diaryapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.debug.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.debug.xcconfig"; sourceTree = "<group>"; };
+		E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-diaryapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = diaryapp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* diaryapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "diaryapp-Bridging-Header.h"; path = "diaryapp/diaryapp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F130C7D4FA99D295BF5FF4A /* libPods-diaryapp.a in Frameworks */,
+				2837F788CBE7634CFBFB3BB9 /* libPods-diaryapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				7C7421F65D660BD0739A6710 /* PrivacyInfo.xcprivacy */,
+				D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */,
 			);
 			name = diaryapp;
 			sourceTree = "<group>";
@@ -62,35 +62,17 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				679FE6057A302B10E02C493B /* libPods-diaryapp.a */,
+				E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3323CB6283FEBE95C7B59725 /* ExpoModulesProviders */ = {
+		3C3FFF0E9774926C97BB9311 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				7A5C482134195215F82442E3 /* diaryapp */,
+				C1F962C3C9B392339A83B37E /* diaryapp */,
 			);
 			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
-		6526268CDC93009287280C2A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				37C0EF17C272C5EEC287637F /* Pods-diaryapp.debug.xcconfig */,
-				0202FCA8C461D09E220F8CC7 /* Pods-diaryapp.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		7A5C482134195215F82442E3 /* diaryapp */ = {
-			isa = PBXGroup;
-			children = (
-				477974EC9B02B11F2ED839B1 /* ExpoModulesProvider.swift */,
-			);
-			name = diaryapp;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -107,8 +89,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				6526268CDC93009287280C2A /* Pods */,
-				3323CB6283FEBE95C7B59725 /* ExpoModulesProviders */,
+				D0BAE74B15712D3700450189 /* Pods */,
+				3C3FFF0E9774926C97BB9311 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -132,6 +114,24 @@
 			path = diaryapp/Supporting;
 			sourceTree = "<group>";
 		};
+		C1F962C3C9B392339A83B37E /* diaryapp */ = {
+			isa = PBXGroup;
+			children = (
+				8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */,
+			);
+			name = diaryapp;
+			sourceTree = "<group>";
+		};
+		D0BAE74B15712D3700450189 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */,
+				B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "diaryapp" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				47FF7F4DEBBA52FBEAC5DD79 /* [Expo] Configure project */,
+				328E8DB97C50BF1DF1C7889D /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				3400318BC250858A16AB8BEA /* [CP] Embed Pods Frameworks */,
+				98B1B1B6D0CEDA211F7B81A5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				D2919D74D22D79CAE7714E17 /* PrivacyInfo.xcprivacy in Resources */,
+				D97C9F87900BC6E812D11371 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,29 +242,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3400318BC250858A16AB8BEA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		47FF7F4DEBBA52FBEAC5DD79 /* [Expo] Configure project */ = {
+		328E8DB97C50BF1DF1C7889D /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -342,6 +320,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		98B1B1B6D0CEDA211F7B81A5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -350,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				2B273C37B8839CE9C105C744 /* ExpoModulesProvider.swift in Sources */,
+				867F27DC5F7EADB400C2DAF6 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +359,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37C0EF17C272C5EEC287637F /* Pods-diaryapp.debug.xcconfig */;
+			baseConfigurationReference = D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -395,7 +395,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0202FCA8C461D09E220F8CC7 /* Pods-diaryapp.release.xcconfig */;
+			baseConfigurationReference = B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
