@@ -123,10 +123,6 @@ const Home = () => {
     return () => unsubscribe();
   }, [localLogin]);
 
-  // useEffect(() => {
-  //   if (email) fetchEntries(page, email);
-  // }, [entries.length]); // ← se déclenche quand le nombre d'entrées change
-
   const formatDate = (timestamp: string) => {
     return new Date(timestamp).toISOString().split("T")[0]; // "2026-05-01"
   };
