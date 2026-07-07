@@ -1,18 +1,12 @@
 import { Stack } from "expo-router";
-import { useEffect } from "react";
 import * as WebBrowser from "expo-web-browser";
 import { AuthProvider } from "../context/AuthContext";
-import * as ScreenOrientation from "expo-screen-orientation";
 import { PaperProvider, MD3LightTheme } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const RootLayoutNav = () => {
-  useEffect(() => {
-    ScreenOrientation.unlockAsync();
-  }, []);
-
   return <Stack screenOptions={{ headerShown: false }} />;
 };
 

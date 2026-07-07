@@ -1,32 +1,16 @@
-import { useRouter } from "expo-router";
-import { useNavigation } from "expo-router";
-import {
-  View,
-  Platform,
-  Pressable,
-  ScrollView,
-  useWindowDimensions,
-} from "react-native";
+import { View, Pressable, ScrollView, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Modal, Portal, Text, PaperProvider } from "react-native-paper";
 import CTextInput from "./CTextInput";
 import CIconButton from "./CIconButton";
 import CRating from "./CRating";
 import CChip from "./CChip";
-import CModal from "./CModal";
+import CViewEntry from "./CViewEntry";
 import CDialog from "./CDialog";
 import CAvatar from "./CAvatar";
-import type { MD3Colors } from "react-native-paper";
-import CButton from "./CButton";
-import { Background } from "@react-navigation/elements";
-
-const getEllipsis = (text: string, maxLength: number): string => {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + "...";
-};
 
 const emotions = [
   "emoticon",
@@ -45,24 +29,6 @@ interface Entry {
   feeling: number;
   content: string;
   created_at: string;
-}
-
-interface deleteProps {
-  setDeleted: React.Dispatch<React.SetStateAction<boolean>>;
-  i: number;
-}
-
-interface PaginatedResponse {
-  entries: Entry[];
-  page: number;
-  total: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrev: boolean;
-}
-
-interface Props {
-  setEntries: [];
 }
 
 const Home = () => {
@@ -85,8 +51,6 @@ const Home = () => {
   const [entryToDelete, setEntryToDelete] = useState<number | null>(null);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-  const [deleted, setDeleted] = useState(false);
 
   const [details, setDetails] = useState(false);
   const showDetails = () => setDetails(true);
@@ -120,7 +84,6 @@ const Home = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       const resolvedEmail = user?.email ?? localLogin ?? null;
       setEmail(resolvedEmail);
-      // ✅ passe resolvedEmail
       if (resolvedEmail) fetchEntries(0, resolvedEmail);
     });
     return () => unsubscribe();
@@ -381,11 +344,12 @@ const Home = () => {
               </Portal>
             </View>
           )}
-          <CModal
+          <CViewEntry
+            message={message}
             visible={visible}
             hideModal={hideModal}
             showModal={showModal}
-            style={{ width: "100%", height: "100%" }}
+            style={{ flex: 1 }}
           >
             <CTextInput
               secureTextEntry={false}
@@ -460,7 +424,7 @@ const Home = () => {
                 onPress={handleSubmit}
               />
             </View>
-          </CModal>
+          </CViewEntry>
           <ScrollView
             style={{
               display: "flex",
@@ -473,7 +437,6 @@ const Home = () => {
               flexGrow: 1, // permet au contenu de grandir
               gap: 10,
             }}
-            // showsVerticalScrollIndicator={false} // cache la barre native
           >
             {entries &&
               entries.length > 0 &&

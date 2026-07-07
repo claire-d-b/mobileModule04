@@ -1,19 +1,11 @@
 import * as React from "react";
-import {
-  Modal,
-  Portal,
-  Text,
-  Button,
-  PaperProvider,
-  IconButton,
-} from "react-native-paper";
+import { Modal, Portal, Text } from "react-native-paper";
 import { StyleProp, ViewStyle, View, useWindowDimensions } from "react-native";
 import CButton from "./CButton";
 import CIconButton from "./CIconButton";
 
 const errorColor = "#A60838";
 const successColor = "#085E24";
-const infoColor = "#353172";
 
 interface Props {
   type?: string;
@@ -24,7 +16,7 @@ interface Props {
   style: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
-const CModal = ({
+const _ = ({
   type,
   message,
   visible,
@@ -36,6 +28,7 @@ const CModal = ({
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
   const containerStyle = {
+    flex: 1,
     backgroundColor: "white",
     // padding: 20,
     // margin: 10,
@@ -119,4 +112,4 @@ const CModal = ({
   );
 };
 
-export default CModal;
+export default _;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IconButton, MD3Colors } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import { GestureResponderEvent } from "react-native";
 import { StyleProp, ViewStyle } from "react-native";
 
@@ -15,7 +15,7 @@ interface Props {
   theme?: {};
 }
 
-const CIconButton = ({
+const _ = ({
   style,
   mode,
   icon,
@@ -39,4 +39,4 @@ const CIconButton = ({
   />
 );
 
-export default CIconButton;
+export default _;

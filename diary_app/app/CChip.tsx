@@ -20,7 +20,7 @@ interface Props {
   disabled: boolean | undefined;
 }
 
-const CChip = ({
+const _ = ({
   theme,
   onPress,
   label,
@@ -45,4 +45,4 @@ const CChip = ({
   </Chip>
 );
 
-export default CChip;
+export default _;

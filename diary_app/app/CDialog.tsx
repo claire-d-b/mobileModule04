@@ -1,12 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import {
-  Button,
-  Dialog,
-  Portal,
-  PaperProvider,
-  Text,
-} from "react-native-paper";
+import { Dialog, Portal, Text } from "react-native-paper";
 import CIconButton from "./CIconButton";
 
 interface Props {
