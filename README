@@ -15,5 +15,8 @@ Deep linking = ouvrir ton app depuis une URL externe.
 - Avec scheme
   Ton app devient accessible via une URL custom
 
-Reinstall to change user : adb uninstall com.anonymous.diaryapp
+Reinstall to change user :
+npx expo prebuild --clean
+npx expo run:android
+adb uninstall com.anonymous.diaryapp
 npx expo run:android
