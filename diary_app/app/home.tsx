@@ -91,7 +91,6 @@ const Home = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       const resolvedEmail = user?.email ?? localLogin ?? null;
       setEmail(resolvedEmail);
-      if (resolvedEmail) fetchEntries(0, resolvedEmail);
     });
     return () => unsubscribe();
   }, [localLogin]);

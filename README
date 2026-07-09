@@ -14,3 +14,6 @@ Deep linking = ouvrir ton app depuis une URL externe.
   Ton app n'a pas d'URL. Impossible de l'ouvrir depuis un lien, un email, ou une redirection OAuth.
 - Avec scheme
   Ton app devient accessible via une URL custom
+
+Reinstall to change user : adb uninstall com.anonymous.diaryapp
+npx expo run:android

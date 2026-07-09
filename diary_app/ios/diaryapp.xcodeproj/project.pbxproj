@@ -8,25 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2837F788CBE7634CFBFB3BB9 /* libPods-diaryapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		867F27DC5F7EADB400C2DAF6 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D97C9F87900BC6E812D11371 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */; };
+		C9A8355C5302AF85D3D05A04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 68219A31E433E6B3F3AD6B66 /* PrivacyInfo.xcprivacy */; };
+		D004EC119F94A1C3AFAABAB5 /* libPods-diaryapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0A56B6054419160EAFE993 /* libPods-diaryapp.a */; };
+		DBB9206D730EB9D8582C1397 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F53021D863354419F60AB0 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		135BFA20F1432982B08DD774 /* Pods-diaryapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.debug.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* diaryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = diaryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = diaryapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = diaryapp/Info.plist; sourceTree = "<group>"; };
-		8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-diaryapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		29F53021D863354419F60AB0 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-diaryapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		68219A31E433E6B3F3AD6B66 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = diaryapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		84AF88A9DF35CBE14640B1C0 /* Pods-diaryapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.release.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = diaryapp/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.release.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.release.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = diaryapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-diaryapp.debug.xcconfig"; path = "Target Support Files/Pods-diaryapp/Pods-diaryapp.debug.xcconfig"; sourceTree = "<group>"; };
-		E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-diaryapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED0A56B6054419160EAFE993 /* libPods-diaryapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-diaryapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = diaryapp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* diaryapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "diaryapp-Bridging-Header.h"; path = "diaryapp/diaryapp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2837F788CBE7634CFBFB3BB9 /* libPods-diaryapp.a in Frameworks */,
+				D004EC119F94A1C3AFAABAB5 /* libPods-diaryapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				D59132E48319493FDA6DD084 /* PrivacyInfo.xcprivacy */,
+				68219A31E433E6B3F3AD6B66 /* PrivacyInfo.xcprivacy */,
 			);
 			name = diaryapp;
 			sourceTree = "<group>";
@@ -62,17 +62,25 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				E8C0D952A6A902BEB297B6E4 /* libPods-diaryapp.a */,
+				ED0A56B6054419160EAFE993 /* libPods-diaryapp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3C3FFF0E9774926C97BB9311 /* ExpoModulesProviders */ = {
+		661A9EF2278233482AA23EA2 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				C1F962C3C9B392339A83B37E /* diaryapp */,
+				705F5E301F054437DF382584 /* diaryapp */,
 			);
 			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		705F5E301F054437DF382584 /* diaryapp */ = {
+			isa = PBXGroup;
+			children = (
+				29F53021D863354419F60AB0 /* ExpoModulesProvider.swift */,
+			);
+			name = diaryapp;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -89,8 +97,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				D0BAE74B15712D3700450189 /* Pods */,
-				3C3FFF0E9774926C97BB9311 /* ExpoModulesProviders */,
+				A54AD42373ABE5B1B06CEBD1 /* Pods */,
+				661A9EF2278233482AA23EA2 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -105,6 +113,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A54AD42373ABE5B1B06CEBD1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				135BFA20F1432982B08DD774 /* Pods-diaryapp.debug.xcconfig */,
+				84AF88A9DF35CBE14640B1C0 /* Pods-diaryapp.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,24 +130,6 @@
 			);
 			name = Supporting;
 			path = diaryapp/Supporting;
-			sourceTree = "<group>";
-		};
-		C1F962C3C9B392339A83B37E /* diaryapp */ = {
-			isa = PBXGroup;
-			children = (
-				8F87202D30D80A28F655559C /* ExpoModulesProvider.swift */,
-			);
-			name = diaryapp;
-			sourceTree = "<group>";
-		};
-		D0BAE74B15712D3700450189 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */,
-				B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "diaryapp" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				328E8DB97C50BF1DF1C7889D /* [Expo] Configure project */,
+				644965A46DDA9574BE985D90 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				98B1B1B6D0CEDA211F7B81A5 /* [CP] Embed Pods Frameworks */,
+				D0598784FC48E56892E555CD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				D97C9F87900BC6E812D11371 /* PrivacyInfo.xcprivacy in Resources */,
+				C9A8355C5302AF85D3D05A04 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +242,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		328E8DB97C50BF1DF1C7889D /* [Expo] Configure project */ = {
+		644965A46DDA9574BE985D90 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -320,7 +320,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-diaryapp/Pods-diaryapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		98B1B1B6D0CEDA211F7B81A5 /* [CP] Embed Pods Frameworks */ = {
+		D0598784FC48E56892E555CD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				867F27DC5F7EADB400C2DAF6 /* ExpoModulesProvider.swift in Sources */,
+				DBB9206D730EB9D8582C1397 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +359,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D601ED529B4E7D661ACF71A0 /* Pods-diaryapp.debug.xcconfig */;
+			baseConfigurationReference = 135BFA20F1432982B08DD774 /* Pods-diaryapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -395,7 +395,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0E470F265EFA95D49112677 /* Pods-diaryapp.release.xcconfig */;
+			baseConfigurationReference = 84AF88A9DF35CBE14640B1C0 /* Pods-diaryapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
