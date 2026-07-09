@@ -50,7 +50,7 @@ const useGithubAuth = () => {
         return;
       }
 
-      const backendUrl = "http://192.168.1.39:3000/auth/github";
+      const backendUrl = "http://192.168.1.15:3000/auth/github";
       try {
         const res = await fetch(backendUrl, {
           method: "POST",

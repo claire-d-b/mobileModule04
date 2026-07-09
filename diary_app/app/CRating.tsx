@@ -1,16 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  Avatar,
-  IconButton,
-  PaperProvider,
-  Checkbox,
-} from "react-native-paper";
-import { Chip, RadioButton, List, Icon } from "react-native-paper";
-import { TextInput, Button, Text } from "react-native-paper";
+import { IconButton } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 interface Props {
+  isLandscape: boolean;
   setRating: React.Dispatch<React.SetStateAction<number>>;
   color: string;
   focusColor: string;
@@ -25,28 +19,39 @@ const emotions = [
   "emoticon-angry",
 ];
 
-const _ = ({ setRating, color, focusColor }: Props) => {
+const _ = ({ isLandscape, setRating, color, focusColor }: Props) => {
   const [checked, setChecked] = React.useState("rate_2");
 
   return (
     <View style={{ display: "flex", width: "100%" }}>
       <View
         style={{
+          margin: 0,
           display: "flex",
+          flexDirection: isLandscape ? "row" : "column",
+          alignItems: "center",
+          justifyContent: isLandscape ? "space-between" : "center",
           backgroundColor: color,
           alignSelf: "stretch",
           borderRadius: 10,
-          marginHorizontal: 20,
           marginTop: 5,
         }}
       >
-        <Text style={{ color: "white", padding: 10 }}>Humeur du jour</Text>
+        <Text
+          style={{
+            color: "white",
+            padding: isLandscape ? 20 : 0,
+            paddingTop: isLandscape ? 20 : 10,
+          }}
+        >
+          Humeur du jour
+        </Text>
         <View
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "100%",
             justifyContent: "center",
+            marginRight: isLandscape ? 20 : 0,
           }}
         >
           {rate &&

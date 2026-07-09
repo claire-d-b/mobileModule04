@@ -1,47 +1,48 @@
-import * as React from "react";
+import { View, useWindowDimensions, ScrollView } from "react-native";
 import { Modal, Portal, Text } from "react-native-paper";
-import { StyleProp, ViewStyle, View, useWindowDimensions } from "react-native";
-import CButton from "./CButton";
 import CIconButton from "./CIconButton";
+import CChip from "./CChip";
+import { formatDate } from "../utils/utils";
+import { getEllipsis } from "./home";
 
-const errorColor = "#A60838";
-const successColor = "#085E24";
+interface Entry {
+  id: number;
+  date: string;
+  title: string;
+  feeling: number;
+  content: string;
+  created_at: string;
+}
 
 interface Props {
-  type?: string;
-  message?: string;
-  visible: boolean;
-  hideModal: () => void;
-  showModal: () => void;
-  style: StyleProp<ViewStyle>;
-  children: React.ReactNode;
+  emotions: string[];
+  containerStyle: {};
+  details: boolean;
+  hideDetails: () => void;
+  selectedEntry: Entry | null;
 }
+
 const _ = ({
-  type,
-  message,
-  visible,
-  hideModal,
-  showModal,
-  style,
-  children,
+  emotions,
+  containerStyle,
+  details,
+  hideDetails,
+  selectedEntry,
 }: Props) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: "white",
-    // padding: 20,
-    // margin: 10,
-    borderRadius: 10,
-  };
-
   return (
-    <>
+    <View>
       <Portal>
         <Modal
-          style={style}
-          visible={visible}
-          onDismiss={hideModal}
+          style={{
+            padding: 0,
+            alignSelf: "center",
+            margin: 0,
+            marginBottom: 20,
+          }}
+          visible={details}
+          onDismiss={hideDetails}
           contentContainerStyle={containerStyle}
         >
           <CIconButton
@@ -50,65 +51,110 @@ const _ = ({
             iconColor="#534DB3"
             containerColor=""
             size={20}
-            onPress={hideModal}
+            onPress={hideDetails}
           />
-          {children}
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
-          >
-            {(type === "success" && (
-              <>
-                <CIconButton
-                  mode="outlined"
-                  style={{ borderColor: successColor, borderWidth: 1 }}
-                  icon="check"
-                  iconColor={successColor}
-                  containerColor=""
-                  size={12}
-                  onPress={() => {}}
-                />
-                <Text style={{ color: successColor }}>{message}</Text>
-              </>
-            )) ||
-              (type === "error" && (
-                <>
-                  <CIconButton
-                    mode="outlined"
-                    style={{ borderColor: errorColor, borderWidth: 1 }}
-                    icon="close"
-                    iconColor={errorColor}
-                    containerColor=""
-                    size={12}
-                    onPress={() => {}}
-                  />
-                  <Text style={{ color: errorColor }}>{message}</Text>
-                </>
-              )) || <></>}
-          </View>
-          <Text style={{ color: "#353172" }}>
-            Add a diary entry or click outside this area to dismiss.
-          </Text>
+          {
+            <ScrollView
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                paddingBottom: 10,
+                paddingLeft: 20,
+                paddingRight: 20,
+              }}
+            >
+              <View
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "100%",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CChip
+                      onPress={() => {}}
+                      label=""
+                      mode="outlined"
+                      icon=""
+                      disabled={true}
+                      textStyle={{ color: "#534DB3" }}
+                      style={{
+                        borderColor: "#534DB3", // ← directement dans style
+                        borderWidth: 1,
+                      }}
+                    >
+                      <Text style={{ color: "#534DB3" }}>
+                        {formatDate(
+                          selectedEntry?.date
+                            ? new Date(selectedEntry.date) // ← convertis en Date
+                            : new Date(),
+                        )}
+                      </Text>
+                    </CChip>
+                    <CIconButton
+                      icon={`${
+                        emotions[(selectedEntry?.feeling ?? 1) - 1]
+                      }-outline`}
+                      iconColor="#534DB3"
+                      containerColor=""
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                      onPress={() => {}}
+                      disabled={true}
+                      theme={{
+                        colors: {
+                          onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
+                        },
+                      }}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color: "#353172",
+                      backgroundColor: "#BBB0D1",
+                      borderRadius: 8,
+                      padding: 20,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {selectedEntry?.title}
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: "#534DB3",
+                      padding: 10,
+                      alignSelf: "flex-start",
+                    }}
+                  >
+                    {selectedEntry?.content}
+                  </Text>
+                </View>
+              </View>
+            </ScrollView>
+          }
         </Modal>
       </Portal>
-      <CButton
-        msg="Add entry"
-        variant="contained"
-        textColor="white"
-        labelStyle=""
-        style={{
-          marginRight: 40,
-          marginBottom: isLandscape ? 10 : 0,
-          alignSelf: "flex-end",
-        }}
-        buttonColor="#534DB3"
-        onPress={showModal}
-      />
-    </>
+    </View>
   );
 };
 
