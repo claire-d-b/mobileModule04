@@ -11,8 +11,8 @@ const infoColor = "#353172";
 
 interface Props {
   isLandscape: boolean;
-  type?: string;
-  message?: string;
+  type: string;
+  message: string;
   visible: boolean;
   hideModal: () => void;
   showModal: () => void;
@@ -122,7 +122,7 @@ const _ = ({
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
-            paddingVertical: 10,
+            paddingVertical: isLandscape ? 0 : 10,
           }}
         >
           <Text
@@ -130,7 +130,7 @@ const _ = ({
               color: "#353172",
               flex: 1,
               flexShrink: 1,
-              padding: 20,
+              padding: isLandscape ? 0 : 20,
             }}
           >
             Add a diary entry or click outside this area to dismiss.
@@ -163,8 +163,17 @@ const _ = ({
                 containerColor=""
                 size={12}
                 onPress={() => {}}
+                disabled={true}
               />
-              <Text style={{ color: successColor }}>{message}</Text>
+              <Text
+                style={{
+                  color: successColor,
+                  width: "100%",
+                  padding: isLandscape ? 0 : 20,
+                }}
+              >
+                {message}
+              </Text>
             </>
           )) ||
             (type === "error" && (
@@ -177,8 +186,17 @@ const _ = ({
                   containerColor=""
                   size={12}
                   onPress={() => {}}
+                  disabled={true}
                 />
-                <Text style={{ color: errorColor }}>{message}</Text>
+                <Text
+                  style={{
+                    color: errorColor,
+                    width: "100%",
+                    padding: isLandscape ? 0 : 20,
+                  }}
+                >
+                  {message}
+                </Text>
               </>
             )) || <></>}
         </View>

@@ -27,7 +27,7 @@ export const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.15:3000";
+const backendUrl = "http://192.168.1.164:3000";
 
 interface Entry {
   id: number;
@@ -94,6 +94,11 @@ const Home = () => {
     });
     return () => unsubscribe();
   }, [localLogin]);
+
+  useEffect(() => {
+    fetchEntries(page);
+    setPage(0);
+  }, []);
 
   const formatDate = (timestamp: string) => {
     return new Date(timestamp).toISOString().split("T")[0]; // "2026-05-01"
@@ -162,7 +167,7 @@ const Home = () => {
       setContent("");
       setFeeling(1);
       await fetchEntries(0, email);
-      hideModal();
+      // hideModal();
     } catch (err) {
       console.error("❌ Error creating entry:", err);
     }
@@ -264,6 +269,8 @@ const Home = () => {
           />
           <CAddEntry
             isLandscape={isLandscape}
+            type={type}
+            message={message}
             visible={visible}
             hideModal={hideModal}
             showModal={showModal}
