@@ -58,6 +58,7 @@ const SignIn = () => {
         // Compte Google/GitHub => Firebase
         await signInWithEmailAndPassword(auth, login, password);
         setLogin("");
+        router.replace("/home");
       }
     } catch (e) {
       console.error("Error during login:", e);

@@ -1,4 +1,5 @@
-builds after npm i
+adb uninstall com.anonymous.diaryapp
+
 npx expo run:android
 npx expo run:ios
 run:android / run:ios compile ET installe l'APK/app directement sur le device, contrairement à expo start qui suppose que l'app est déjà installée.
