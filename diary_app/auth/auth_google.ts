@@ -1,13 +1,9 @@
 import * as Google from "expo-auth-session/providers/google";
-import * as WebBrowser from "expo-web-browser";
 import { useEffect } from "react";
 import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { Platform } from "react-native";
 import auth from "../config/firebase";
 
-// WebBrowser.maybeCompleteAuthSession();
-
-const backendUrl = "http://192.168.1.164:3000";
+const backendUrl = "http://192.168.1.192:3000";
 
 const useGoogleAuth = () => {
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -26,12 +22,11 @@ const useGoogleAuth = () => {
       const idToken = authentication?.idToken;
 
       if (!accessToken || !idToken) {
-        console.error("❌ Missing tokens");
+        console.error("Missing tokens");
         return;
       }
 
       try {
-        // 1. Backend call
         const res = await fetch(`${backendUrl}/auth/google`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -41,19 +36,19 @@ const useGoogleAuth = () => {
         const data = await res.json();
 
         if (!res.ok) {
-          console.error("❌ Backend Google error:", data.error);
+          console.error("Backend Google error:", data.error);
           return;
         }
 
-        console.log("✅ Google user in DB:", data.user);
+        console.log("Google user in DB:", data.user);
 
-        // 2. Firebase Auth
+        // Ce code finalise l'authentification Google côté Firebase, après que l'utilisateur se soit connecté via le flux OAuth Google.
         const credential = GoogleAuthProvider.credential(idToken);
         await signInWithCredential(auth, credential);
 
-        console.log("✅ Google login success:", data.user.login);
-      } catch (err) {
-        console.error("❌ Google auth error:", err);
+        console.log("Google login success:", data.user.login);
+      } catch (e) {
+        console.error("Google auth error:", e);
       }
     };
 

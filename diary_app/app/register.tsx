@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { View, Platform, Text } from "react-native";
+import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
-import auth from "../config/firebase";
 import { useAuthContext } from "../context/AuthContext";
 import CTextInput from "./CTextInput";
 import CButton from "./CButton";
@@ -15,7 +12,7 @@ interface Information {
   npassword: string;
 }
 
-const backendUrl = "http://192.168.1.164:3000";
+const backendUrl = "http://192.168.1.192:3000";
 
 const Register = () => {
   const [login, setLogin] = useState("");
@@ -46,7 +43,7 @@ const Register = () => {
   const handleSubmit = async ({ login, password, npassword }: Information) => {
     setError("");
 
-    console.log("📡 handleSubmit called", {
+    console.log("handleSubmit called", {
       login,
       password: "***",
       backendUrl,
@@ -78,9 +75,9 @@ const Register = () => {
         body: JSON.stringify({ login, password }),
       });
 
-      console.log("📡 status:", res.status);
+      console.log("status:", res.status);
       const text = await res.text();
-      console.log("📡 raw response:", text);
+      console.log("raw response:", text);
 
       let data;
       try {
@@ -92,15 +89,15 @@ const Register = () => {
 
       if (!res.ok) {
         setError(data.error || "Registration failed");
-        console.error("❌ Registration failed:", data.error);
+        console.error("Registration failed:", data.error);
         return;
       }
 
-      console.log("✅ Registration success:", data.user);
+      console.log("Registration success:", data.user);
       await setLocalLogin(login);
       router.replace("/home" as any);
-    } catch (err: any) {
-      console.error("❌ Network error:", err);
+    } catch (e: any) {
+      console.error("Network error:", e);
       setError("Network error — backend running?");
     }
   };

@@ -7,7 +7,6 @@ import CRating from "./CRating";
 
 const errorColor = "#A60838";
 const successColor = "#085E24";
-const infoColor = "#353172";
 
 interface Props {
   isLandscape: boolean;

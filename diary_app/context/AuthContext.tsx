@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     let isMounted = true;
 
     const init = async () => {
-      // 1. Try to restore a previously saved local login immediately
+      // Try to restore a previously saved local login immediately
       try {
         const storedLogin = await AsyncStorage.getItem("localLogin");
         if (isMounted && storedLogin) {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.warn("Failed to read localLogin from storage", e);
       }
 
-      // 2. Then let Firebase's auth state override/confirm as needed
+      // Then let Firebase's auth state override/confirm as needed
       const auth = getAuth();
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (!isMounted) return;
@@ -42,8 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setLocalLoginState(user.email);
           await AsyncStorage.setItem("localLogin", user.email);
         }
-        // NOTE: intentionally not clearing localLogin here if user is null,
-        // since you may want to keep the local/manual login as a fallback.
+        // Not clearing localLogin here if user is null, since you may want to keep the local/manual login as a fallback.
 
         setLoading(false);
       });

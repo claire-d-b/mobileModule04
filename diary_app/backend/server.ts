@@ -1,4 +1,3 @@
-// backend/server.ts
 import express from "express";
 import type { Request, Response } from "express";
 import pg from "pg";
@@ -20,9 +19,12 @@ app.listen(3000, "0.0.0.0", () => {
   console.log("Server running on 3000");
 });
 
-// ✅ Middlewares AVANT les routes
+// Middlewares Express avant les routes
+// Active CORS (Cross-Origin Resource Sharing). Sans ça, un navigateur bloquerait par défaut les requêtes venant d'une origine différente (par exemple, ton frontend sur localhost:8081 qui appelle ton backend sur localhost:3000
 app.use(cors());
+// Permet à Express de comprendre et parser automatiquement le corps des requêtes envoyées au format JSON (Content-Type: application/json). Sans ce middleware, req.body serait undefined quand un client envoie du JSON — avec lui, Express le parse et le rend disponible directement en objet JavaScript via req.body.
 app.use(express.json());
+// Pour les forms - parse les données du corps de la requete et les traduit en objet javascript accessible via req.body.
 app.use(express.urlencoded({ extended: true }));
 
 const { Pool } = pg;
@@ -35,7 +37,6 @@ const pool = new Pool({
   port: Number(process.env.DB_PORT) || 5432,
 });
 
-// Types
 interface RegisterBody {
   login: string;
   password: string;
@@ -71,7 +72,6 @@ interface GoogleProfile {
   email: string;
 }
 
-// Init DB
 const initDB = async (): Promise<void> => {
   try {
     await pool.query(`
@@ -104,15 +104,11 @@ const initDB = async (): Promise<void> => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT NOW();
     `);
 
-    console.log("✅ Tables ready");
-  } catch (err) {
-    console.error("❌ DB init failed:", err);
+    console.log("Tables ready");
+  } catch (e) {
+    console.error("DB init failed:", e);
   }
 };
-
-// initDB().then(() => {
-//   app.listen(3000, () => console.log("Server running on port 3000"));
-// });
 
 // REGISTER USER
 app.post(
@@ -129,9 +125,9 @@ app.post(
       );
       console.log("✅ User registered:", result.rows[0]);
       res.json({ message: "Registration success", user: result.rows[0] });
-    } catch (err: any) {
-      console.error(err);
-      if (err.code === "23505") {
+    } catch (e: any) {
+      console.error(e);
+      if (e.code === "23505") {
         return res.status(400).json({ error: "Login already exists" });
       }
       res.status(500).json({ error: "Registration failed" });
@@ -175,8 +171,8 @@ app.post(
         message: "Login success",
         user: { id: user.id, login: user.login, provider: user.provider },
       });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Login failed" });
     }
   },
@@ -231,10 +227,10 @@ app.post(
         [login, String(profile.id)],
       );
 
-      console.log("✅ GitHub user upserted:", result.rows[0]);
+      console.log("GitHub user upserted:", result.rows[0]);
       res.json({ access_token: data.access_token, user: result.rows[0] });
-    } catch (err) {
-      console.error("❌ GitHub auth error:", err);
+    } catch (e) {
+      console.error("GitHub auth error:", e);
       res.status(500).json({ error: "GitHub auth failed" });
     }
   },
@@ -269,10 +265,10 @@ app.post(
         [profile.email, String(profile.sub)],
       );
 
-      console.log("✅ Google user upserted:", result.rows[0]);
+      console.log("Google user upserted:", result.rows[0]);
       res.json({ user: result.rows[0] });
-    } catch (err) {
-      console.error("❌ Google auth error:", err);
+    } catch (e) {
+      console.error("Google auth error:", e);
       res.status(500).json({ error: "Google auth failed" });
     }
   },
@@ -297,8 +293,8 @@ app.post(
         [user_id, date, title, feeling, content],
       );
       res.json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Failed to create entry" });
     }
   },
@@ -334,7 +330,7 @@ app.get("/entries/:email", async (req, res) => {
       hasNext: offset + limit < total,
       hasPrev: page > 0,
     });
-  } catch (err) {
+  } catch {
     res.status(500).json({ error: "Failed to fetch entries" });
   }
 });
@@ -355,8 +351,8 @@ app.get(
       );
 
       res.json({ count: parseInt(result.rows[0].count) });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Failed to count entries" });
     }
   },
@@ -393,8 +389,8 @@ app.get(
       );
 
       res.json({ stats, total });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Failed to fetch stats" });
     }
   },
@@ -415,8 +411,8 @@ app.delete(
       }
       console.log("✅ Entry deleted:", result.rows[0]);
       res.json({ message: "Entry deleted", entry: result.rows[0] });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Failed to delete entry" });
     }
   },
@@ -458,8 +454,8 @@ app.get(
         hasNext: offset + limit < total,
         hasPrev: page > 0,
       });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       res.status(500).json({ error: "Failed to fetch entries by date" });
     }
   },

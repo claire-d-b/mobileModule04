@@ -25,7 +25,7 @@ const seedTestUser = async (): Promise<void> => {
       ["test_user", hashedPassword],
     );
     const user = userResult.rows[0];
-    console.log(`✅ User created: ${user.login} (id: ${user.id})`);
+    console.log(`User created: ${user.login} (id: ${user.id})`);
 
     const entries = [
       // --- 10 entries on 2026-05-15 (pagination testing) ---
@@ -183,9 +183,9 @@ const seedTestUser = async (): Promise<void> => {
       );
     }
 
-    console.log(`✅ ${entries.length} diary entries inserted`);
-  } catch (err) {
-    console.error("❌ Seeding failed:", err);
+    console.log(`${entries.length} diary entries inserted`);
+  } catch (e) {
+    console.error("Seeding failed:", e);
   } finally {
     await pool.end();
   }

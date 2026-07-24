@@ -3,20 +3,14 @@ npx expo run:android
 npx expo run:ios
 run:android / run:ios compile ET installe l'APK/app directement sur le device, contrairement à expo start qui suppose que l'app est déjà installée.
 
-in diary_app/backend node reset-db.ts, node create-user.ts, node server.ts
-in diary_app - npx expo start --clear --tunnel
+in diary_app/backend : node reset-db.ts, node create-user.ts, node server.ts
+in diary_app : npx expo start --clear --tunnel
 s - switch to development build for auth
 
-Make sure your IP address corresponds to that of the backend
+/!\ Make sure your IP address corresponds to that of the backend !
 Deep linking = ouvrir ton app depuis une URL externe.
 
 - Sans scheme
   Ton app n'a pas d'URL. Impossible de l'ouvrir depuis un lien, un email, ou une redirection OAuth.
 - Avec scheme
   Ton app devient accessible via une URL custom
-
-Reinstall to change user :
-npx expo prebuild --clean
-npx expo run:android
-adb uninstall com.anonymous.diaryapp
-npx expo run:android

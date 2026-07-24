@@ -15,13 +15,13 @@ const pool = new Pool({
 
 const resetDB = async (): Promise<void> => {
   try {
-    console.log("⚠️  Resetting database...");
+    console.log("Resetting database...");
 
     await pool.query(`
       DROP TABLE IF EXISTS diary_entries CASCADE;
       DROP TABLE IF EXISTS users CASCADE;
     `);
-    console.log("✅ Tables dropped");
+    console.log("Tables dropped");
 
     await pool.query(`
       CREATE TABLE users (
@@ -64,10 +64,10 @@ const resetDB = async (): Promise<void> => {
         FOR EACH ROW EXECUTE FUNCTION update_updated_at();
     `);
 
-    console.log("✅ Tables recreated");
-    console.log("✅ Database reset complete");
-  } catch (err) {
-    console.error("❌ Reset failed:", err);
+    console.log("Tables recreated");
+    console.log("Database reset complete");
+  } catch (e) {
+    console.error("Reset failed:", e);
   } finally {
     await pool.end();
   }

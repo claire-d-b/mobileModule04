@@ -2,12 +2,9 @@ import { View, Pressable, ScrollView, useWindowDimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthContext } from "../context/AuthContext";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Modal, Portal, Text, PaperProvider } from "react-native-paper";
-import CTextInput from "./CTextInput";
+import { Text } from "react-native-paper";
 import CIconButton from "./CIconButton";
 import CButton from "./CButton";
-import CRating from "./CRating";
 import CChip from "./CChip";
 import CViewEntry from "./CViewEntry";
 import CDialog from "./CDialog";
@@ -27,7 +24,7 @@ export const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "http://192.168.1.164:3000";
+const backendUrl = "http://192.168.1.192:3000";
 
 interface Entry {
   id: number;
@@ -54,7 +51,6 @@ const Home = () => {
   const showDialog = () => setVisibleDialog(true);
   const hideDialog = () => setVisibleDialog(false);
 
-  // Dans Home.tsx
   const [entryToDelete, setEntryToDelete] = useState<number | null>(null);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -100,8 +96,8 @@ const Home = () => {
     setPage(0);
   }, []);
 
-  const formatDate = (timestamp: string) => {
-    return new Date(timestamp).toISOString().split("T")[0]; // "2026-05-01"
+  const getDate = (timestamp: string) => {
+    return new Date(timestamp).toISOString().slice(0, 10); // "2026-05-01"
   };
 
   const fetchEntries = async (
@@ -121,10 +117,10 @@ const Home = () => {
       const list: Entry[] = data.entries ?? [];
       setEntries(list);
       setPressed(new Array(list.length).fill(false));
-      setHasNext(data.hasNext); // ✅
-      setHasPrev(data.hasPrev); // ✅
-    } catch (err) {
-      console.error("❌ Error fetching entries:", err);
+      setHasNext(data.hasNext);
+      setHasPrev(data.hasPrev);
+    } catch (e) {
+      console.error("Error fetching entries:", e);
     }
   };
 
@@ -135,8 +131,8 @@ const Home = () => {
       setType("error");
       return;
     }
-    console.log("📡 auth.currentUser:", auth.currentUser?.email);
-    console.log("📡 email utilisé:", email);
+    console.log("auth.currentUser:", auth.currentUser?.email);
+    console.log("email utilisé:", email);
 
     try {
       const res = await fetch(`${backendUrl}/entries`, {
@@ -154,11 +150,11 @@ const Home = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error("❌ Failed to create entry:", data.error);
+        console.error("Failed to create entry:", data.error);
         return;
       }
 
-      console.log("✅ Entry created:", data);
+      console.log("Entry created:", data);
       setMessage("Entry successfully created!");
       setType("success");
 
@@ -167,9 +163,8 @@ const Home = () => {
       setContent("");
       setFeeling(1);
       await fetchEntries(0, email);
-      // hideModal();
-    } catch (err) {
-      console.error("❌ Error creating entry:", err);
+    } catch (e) {
+      console.error("Error creating entry:", e);
     }
   };
 
@@ -180,12 +175,12 @@ const Home = () => {
       });
       const data = await res.json();
       if (!res.ok) {
-        console.error("❌ Failed to delete entry:", data.error);
+        console.error("Failed to delete entry:", data.error);
         return;
       }
-      console.log("✅ Entry deleted:", data.entry);
+      console.log("Entry deleted:", data.entry);
 
-      // ← si c'était la dernière entrée de la page, revenir à la page précédente
+      // si c'était la dernière entrée de la page, revenir à la page précédente
       if (entries.length === 1 && page > 0) {
         const prevPage = page - 1;
         setPage(prevPage);
@@ -193,14 +188,13 @@ const Home = () => {
       } else {
         await fetchEntries(page, email);
       }
-    } catch (err) {
-      console.error("❌ Error deleting entry:", err);
+    } catch (e) {
+      console.error("Error deleting entry:", e);
     }
   };
 
   const loadMore = async () => {
     if (hasNext) {
-      // ✅ au lieu de page < totalPages
       const nextPage = page + 1;
       await fetchEntries(nextPage, email);
       setPage(nextPage);
@@ -209,7 +203,6 @@ const Home = () => {
 
   const loadLess = async () => {
     if (hasPrev) {
-      // ✅ au lieu de page > 0
       const nextPage = page - 1;
       await fetchEntries(nextPage, email);
       setPage(nextPage);
@@ -307,9 +300,8 @@ const Home = () => {
                 <Pressable
                   key={`entry_${i}`}
                   style={{
-                    width: "100%", // ← ajoute ça
+                    width: "100%",
                     flexDirection: "row",
-                    // marginVertical: isLandscape ? 20 : 0,
                     padding: 5,
                     justifyContent: "center",
                     alignItems: "center",
@@ -352,7 +344,7 @@ const Home = () => {
                       disabled={true}
                     >
                       <Text style={{ color: "#534DB3" }}>
-                        {formatDate(e.date)}
+                        {getDate(e.date)}
                       </Text>
                     </CChip>
                   </View>
@@ -365,7 +357,7 @@ const Home = () => {
                     disabled={true}
                     theme={{
                       colors: {
-                        onSurfaceDisabled: "white", // ← couleur de l'icône quand disabled
+                        onSurfaceDisabled: "white",
                       },
                     }}
                   />
@@ -393,7 +385,7 @@ const Home = () => {
                     containerColor="transparent"
                     size={20}
                     onPress={() => {
-                      setEntryToDelete(e.id); // ← stocke le bon id
+                      setEntryToDelete(e.id);
                       showDialog();
                     }}
                   />
@@ -433,17 +425,6 @@ const Home = () => {
             </View>
           )}
         </ScrollView>
-        {/* <View
-            style={{
-              position: "absolute",
-              right: 3,
-              top: 3,
-              bottom: 3,
-              width: 4,
-              backgroundColor: "#BBB0D1",
-              borderRadius: 2,
-            }}
-          /> */}
       </View>
       <View
         style={{

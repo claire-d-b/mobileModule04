@@ -1,12 +1,12 @@
 import Signin from "./signin";
 import Home from "./home";
-import Loading from "./loading";
+import CLoading from "./CLoading";
 import { useAuthContext } from "../context/AuthContext";
 
 const _ = () => {
   const { localLogin, loading } = useAuthContext();
 
-  return loading ? <Loading /> : localLogin ? <Home /> : <Signin />;
+  return loading ? <CLoading /> : localLogin ? <Home /> : <Signin />;
 };
 
 export default _;

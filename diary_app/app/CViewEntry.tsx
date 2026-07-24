@@ -3,7 +3,6 @@ import { Modal, Portal, Text } from "react-native-paper";
 import CIconButton from "./CIconButton";
 import CChip from "./CChip";
 import { formatDate } from "../utils/utils";
-import { getEllipsis } from "./home";
 
 interface Entry {
   id: number;
@@ -98,14 +97,14 @@ const _ = ({
                       disabled={true}
                       textStyle={{ color: "#534DB3" }}
                       style={{
-                        borderColor: "#534DB3", // ← directement dans style
+                        borderColor: "#534DB3",
                         borderWidth: 1,
                       }}
                     >
                       <Text style={{ color: "#534DB3" }}>
                         {formatDate(
                           selectedEntry?.date
-                            ? new Date(selectedEntry.date) // ← convertis en Date
+                            ? new Date(selectedEntry.date)
                             : new Date(),
                         )}
                       </Text>
@@ -122,7 +121,7 @@ const _ = ({
                       disabled={true}
                       theme={{
                         colors: {
-                          onSurfaceDisabled: "#534DB3", // ← couleur de l'icône quand disabled
+                          onSurfaceDisabled: "#534DB3",
                         },
                       }}
                     />
