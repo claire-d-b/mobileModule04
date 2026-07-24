@@ -1,4 +1,8 @@
+# Pour clear les identifiants de connexion
+
 adb uninstall com.anonymous.diaryapp
+
+# Pour lancer l'app
 
 npx expo run:android
 npx expo run:ios
@@ -7,6 +11,8 @@ run:android / run:ios compile ET installe l'APK/app directement sur le device, c
 in diary_app/backend : node reset-db.ts, node create-user.ts, node server.ts
 in diary_app : npx expo start --clear --tunnel
 s - switch to development build for auth
+
+# Additional information
 
 /!\ Make sure your IP address corresponds to that of the backend !
 /!\ Make sure your device is connected to the same WiFi as your computer
