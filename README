@@ -8,6 +8,7 @@ in diary_app : npx expo start --clear --tunnel
 s - switch to development build for auth
 
 /!\ Make sure your IP address corresponds to that of the backend !
+/!\ Make sure your device is connected to the same WiFi as your computer
 Deep linking = ouvrir ton app depuis une URL externe.
 
 - Sans scheme
