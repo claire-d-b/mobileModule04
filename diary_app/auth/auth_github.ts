@@ -24,13 +24,10 @@ const useGithubAuth = () => {
   if (!clientId)
     throw new Error("Missing EXPO_PUBLIC_GITHUB_CLIENT_ID in .env");
 
-  // useAuthRequest(config, discovery)
-  // config = a valid AuthRequestConfig that specifies what provider to use.
-  // discovery = A loaded DiscoveryDocument with endpoints used for authenticating.
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
       clientId, // GitHub OAuth App ID
-      scopes: ["read:user", "user:email"], // ce que tu demandes comme permissions
+      scopes: ["read:user", "user:email"], // ce qu'on demande comme permissions
       redirectUri, // où GitHub redirige après login
       // PKCE (Proof Key for Code Exchange) est une sécurité supplémentaire pour les apps mobiles, mais GitHub OAuth Apps ne le supportent pas — donc on le désactive.
       usePKCE: false,

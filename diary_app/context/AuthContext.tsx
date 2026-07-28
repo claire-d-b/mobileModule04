@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [localLogin, setLocalLoginState] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true); // ← nouveau
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setLocalLoginState(user.email);
           await AsyncStorage.setItem("localLogin", user.email);
         }
-        // Not clearing localLogin here if user is null, since you may want to keep the local/manual login as a fallback.
+        // Not clearing localLogin here if user is null, since we want to keep the local/manual login as a fallback.
 
         setLoading(false);
       });
