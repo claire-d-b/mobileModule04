@@ -2,6 +2,7 @@ import * as Google from "expo-auth-session/providers/google";
 import { useEffect } from "react";
 import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import auth from "../config/firebase";
+import { router } from "expo-router";
 
 const backendUrl = "http://192.168.1.192:3000";
 
@@ -47,6 +48,7 @@ const useGoogleAuth = () => {
         await signInWithCredential(auth, credential);
 
         console.log("Google login success:", data.user.login);
+        // router.replace("/home");
       } catch (e) {
         console.error("Google auth error:", e);
       }

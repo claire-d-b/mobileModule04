@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+// AuthContext.tsx
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 interface AuthContextType {
   localLogin: string | null;
@@ -22,27 +28,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     let isMounted = true;
 
     const init = async () => {
-      // Try to restore a previously saved local login immediately
-      try {
-        const storedLogin = await AsyncStorage.getItem("localLogin");
-        if (isMounted && storedLogin) {
-          setLocalLoginState(storedLogin);
-        }
-      } catch (e) {
-        console.warn("Failed to read localLogin from storage", e);
-      }
-
-      // Then let Firebase's auth state override/confirm as needed
       const auth = getAuth();
+
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (!isMounted) return;
 
         if (user?.email) {
           console.log("🔥 Firebase user detected:", user.email);
           setLocalLoginState(user.email);
-          await AsyncStorage.setItem("localLogin", user.email);
+        } else {
+          setLocalLoginState(null);
         }
-        // Not clearing localLogin here if user is null, since we want to keep the local/manual login as a fallback.
 
         setLoading(false);
       });
@@ -60,12 +56,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setLocalLogin = async (login: string | null) => {
     setLocalLoginState(login);
-
-    if (login) {
-      await AsyncStorage.setItem("localLogin", login);
-    } else {
-      await AsyncStorage.removeItem("localLogin");
-    }
   };
 
   return (

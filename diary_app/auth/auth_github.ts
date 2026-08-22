@@ -2,6 +2,7 @@ import * as AuthSession from "expo-auth-session";
 import { useEffect } from "react";
 import { GithubAuthProvider, signInWithCredential } from "firebase/auth";
 import auth from "../config/firebase";
+// import { router } from "expo-router";
 
 // authorizationEndpoint — l'URL du navigateur qui s'ouvre quand l'utilisateur clique sur "Login with GitHub"
 // tokenEndpoint — l'URL pour échanger le code contre un access_token.
@@ -75,6 +76,7 @@ const useGithubAuth = () => {
         await signInWithCredential(auth, credential);
 
         console.log("GitHub login success");
+        // router.replace("/home");
       } catch (e) {
         console.error("GitHub auth error:", e);
       }
