@@ -1,3 +1,4 @@
+.env
 diary_app/node_modules
 diary_app/package-lock.json
 diary_app/tsconfig.json
