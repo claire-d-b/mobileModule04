@@ -22,3 +22,8 @@ Deep linking = ouvrir ton app depuis une URL externe.
   Ton app n'a pas d'URL. Impossible de l'ouvrir depuis un lien, un email, ou une redirection OAuth.
 - Avec scheme
   Ton app devient accessible via une URL custom
+
+To free space :
+rm -rf $HOME/.gradle
+du -sh $HOME/.local/* 2>/dev/null | sort -rh | head -10
+du -sh $HOME/.config/* 2>/dev/null | sort -rh | head -10

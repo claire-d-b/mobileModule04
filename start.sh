@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# ********* .env *********
+ENV_FILE="$(dirname "${BASH_SOURCE[0]:-$0}")/.env"
+if [ -f "$ENV_FILE" ]; then
+  set -a
+  . "$ENV_FILE"
+  set +a
+else
+  echo "⚠️  .env introuvable à $ENV_FILE"
+fi
+
 # ********* adb *********
 if [ ! -f "$HOME/platform-tools/adb" ]; then
   curl -L "https://dl.google.com/android/repository/platform-tools-latest-linux.zip" -o "$HOME/platform-tools.zip"
@@ -26,12 +36,13 @@ node -v
 npm -v
 
 # ********* java *********
-if [ ! -d "$HOME/sgoinfre/jdk-25.0.3" ]; then
-  wget -P "$HOME/sgoinfre" https://download.oracle.com/java/25/latest/jdk-25_linux-x64_bin.tar.gz
-  tar -xzf "$HOME/sgoinfre/jdk-25_linux-x64_bin.tar.gz" -C "$HOME/sgoinfre"
-  rm "$HOME/sgoinfre/jdk-25_linux-x64_bin.tar.gz"
+export JAVA_HOME="$(ls -d "$HOME/goinfre"/jdk-25* 2>/dev/null | head -1)"
+if [ -z "$JAVA_HOME" ]; then
+  wget -P "$HOME/goinfre" https://download.oracle.com/java/25/latest/jdk-25_linux-x64_bin.tar.gz
+  tar -xzf "$HOME/goinfre/jdk-25_linux-x64_bin.tar.gz" -C "$HOME/goinfre"
+  rm "$HOME/goinfre/jdk-25_linux-x64_bin.tar.gz"
+  export JAVA_HOME="$(ls -d "$HOME/goinfre"/jdk-25* | head -1)"
 fi
-export JAVA_HOME="$(ls -d "$HOME/sgoinfre"/jdk-25* | head -1)"
 export PATH="$JAVA_HOME/bin:$PATH"
 java -version
 
@@ -53,6 +64,29 @@ fi
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
 
 # ********* npm cache *********
-npm config set cache "$HOME/sgoinfre/.npm-cache"
+npm config set cache "$HOME/goinfre/.npm-cache"
 
-cd "$HOME/sgoinfre/mobileModule04"
+# ********* ngrok *********
+if [ ! -f "$HOME/goinfre/ngrok/ngrok" ]; then
+  mkdir -p "$HOME/goinfre/ngrok"
+  curl -L "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz" -o "$HOME/goinfre/ngrok.tgz"
+  tar -xzf "$HOME/goinfre/ngrok.tgz" -C "$HOME/goinfre/ngrok"
+  rm "$HOME/goinfre/ngrok.tgz"
+fi
+export PATH="$HOME/goinfre/ngrok:$PATH"
+ngrok version
+ngrok config add-authtoken "$NGROK_AUTHTOKEN"
+
+# kill any locally running ngrok process before starting a new tunnel
+if pgrep -x ngrok > /dev/null; then
+  echo "Existing local ngrok process found, killing it..."
+  pkill -x ngrok
+  sleep 1
+fi
+
+ngrok http 3000 --log=stdout > "$HOME/goinfre/ngrok.log" &
+sleep 2
+NGROK_URL=$(curl -s http://127.0.0.1:4040/api/tunnels | grep -o '"public_url":"[^"]*' | grep -o 'https://[^"]*' | head -1)
+echo "Backend exposed at: $NGROK_URL"
+
+cd "$HOME/goinfre/mobileModule04"
