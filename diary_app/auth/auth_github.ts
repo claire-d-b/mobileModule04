@@ -47,7 +47,7 @@ const useGithubAuth = () => {
         return;
       }
 
-      const backendUrl = "http://192.168.1.192:3000/auth/github";
+      const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev/auth/github";
       try {
         const res = await fetch(backendUrl, {
           method: "POST",

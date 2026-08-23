@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import auth from "../config/firebase";
 import { router } from "expo-router";
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev";
 
 const useGoogleAuth = () => {
   const [request, response, promptAsync] = Google.useAuthRequest({

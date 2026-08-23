@@ -12,7 +12,7 @@ interface Information {
   npassword: string;
 }
 
-const backendUrl = "http://192.168.1.192:3000";
+const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev";
 
 const Register = () => {
   const [login, setLogin] = useState("");
