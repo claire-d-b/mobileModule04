@@ -94,7 +94,7 @@ const Home = () => {
   useEffect(() => {
     fetchEntries(page);
     setPage(0);
-  }, []);
+  }, [email]);
 
   const getDate = (timestamp: string) => {
     return new Date(timestamp).toISOString().slice(0, 10); // "2026-05-01"

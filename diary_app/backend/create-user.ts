@@ -11,23 +11,73 @@ const pool = new Pool({
   port: Number(process.env.DB_PORT),
 });
 
+type Entry = {
+  date: string;
+  title: string;
+  feeling: number;
+  content: string;
+};
+
+const seedLocalUser = async (
+  login: string,
+  password: string,
+  entries: Entry[],
+): Promise<void> => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const userResult = await pool.query(
+    `INSERT INTO users (login, password, provider)
+     VALUES ($1, $2, 'local')
+     ON CONFLICT (login) DO UPDATE SET password = EXCLUDED.password
+     RETURNING id, login`,
+    [login, hashedPassword],
+  );
+  const user = userResult.rows[0];
+  console.log(`User created: ${user.login} (id: ${user.id})`);
+
+  for (const entry of entries) {
+    await pool.query(
+      `INSERT INTO diary_entries (user_id, date, title, feeling, content)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [user.id, entry.date, entry.title, entry.feeling, entry.content],
+    );
+  }
+
+  console.log(`${entries.length} diary entries inserted for ${login}`);
+};
+
+const seedGoogleUser = async (
+  login: string,
+  entries: Entry[],
+): Promise<void> => {
+  const userResult = await pool.query(
+    `INSERT INTO users (login, password, provider)
+     VALUES ($1, NULL, 'google')
+     ON CONFLICT (login) DO UPDATE SET provider = EXCLUDED.provider
+     RETURNING id, login`,
+    [login],
+  );
+  const user = userResult.rows[0];
+  console.log(`User created: ${user.login} (id: ${user.id})`);
+
+  for (const entry of entries) {
+    await pool.query(
+      `INSERT INTO diary_entries (user_id, date, title, feeling, content)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [user.id, entry.date, entry.title, entry.feeling, entry.content],
+    );
+  }
+
+  console.log(`${entries.length} diary entries inserted for ${login}`);
+};
+
 const seedTestUser = async (): Promise<void> => {
   try {
     const testPassword = process.env.TEST_USER_PASSWORD;
     if (!testPassword) throw new Error("Missing TEST_USER_PASSWORD in .env");
-    const hashedPassword = await bcrypt.hash(testPassword, 10);
 
-    const userResult = await pool.query(
-      `INSERT INTO users (login, password, provider)
-       VALUES ($1, $2, 'local')
-       ON CONFLICT (login) DO UPDATE SET password = EXCLUDED.password
-       RETURNING id, login`,
-      ["test_user", hashedPassword],
-    );
-    const user = userResult.rows[0];
-    console.log(`User created: ${user.login} (id: ${user.id})`);
-
-    const entries = [
+    // --- Utilisateur 1 : test_user (local) ---
+    const testUserEntries: Entry[] = [
       // --- 10 entries on 2026-05-15 (pagination testing) ---
       {
         date: "2026-05-15",
@@ -175,15 +225,48 @@ const seedTestUser = async (): Promise<void> => {
       },
     ];
 
-    for (const entry of entries) {
-      await pool.query(
-        `INSERT INTO diary_entries (user_id, date, title, feeling, content)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [user.id, entry.date, entry.title, entry.feeling, entry.content],
-      );
-    }
+    await seedLocalUser("test_user", testPassword, testUserEntries);
 
-    console.log(`${entries.length} diary entries inserted`);
+    // --- Utilisateur 2 : sdiaryapp@gmail.com (Google) ---
+    const sdiaryEntries: Entry[] = [
+      {
+        date: "2026-06-01",
+        title: "Nouveau départ",
+        feeling: 4,
+        content:
+          "Premier jour avec ce nouveau compte. Envie de prendre l'habitude d'écrire régulièrement.",
+      },
+      {
+        date: "2026-06-05",
+        title: "Journée productive",
+        feeling: 4,
+        content:
+          "Beaucoup avancé sur mes projets aujourd'hui. Satisfaite du rythme.",
+      },
+      {
+        date: "2026-06-12",
+        title: "Petit coup de mou",
+        feeling: 2,
+        content:
+          "Fatiguée toute la journée, difficile de me concentrer sur quoi que ce soit.",
+      },
+      {
+        date: "2026-06-18",
+        title: "Sortie improvisée",
+        feeling: 5,
+        content:
+          "Balade au bord de l'eau avec des amis, on ne l'avait pas prévu et c'était parfait.",
+      },
+      {
+        date: "2026-06-25",
+        title: "Réflexion du soir",
+        feeling: 3,
+        content:
+          "Journée calme, sans grand relief, mais agréable. Besoin de ce genre de pause.",
+      },
+    ];
+
+    await seedGoogleUser("sdiaryapp@gmail.com", sdiaryEntries);
   } catch (e) {
     console.error("Seeding failed:", e);
   } finally {
