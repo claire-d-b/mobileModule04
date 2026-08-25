@@ -1,15 +1,13 @@
 bash
-source ./startLinux.sh
 
-# Pour clear les identifiants de connexion
-
-adb uninstall com.anonymous.diaryapp
-
-# Pour lancer l'app
-
-npx expo run:android
-npx expo run:ios
-run:android / run:ios compile ET installe l'APK/app directement sur le device, contrairement à expo start qui suppose que l'app est déjà installée.
+- Git clone in sgoinfre as mobileModule04
+- Access the repo with VSCode
+- Add 3 env files zith local data
+- Open 2 terminals
+- source ./startLinux.sh in both 2 terminals
+- npm i in diary_app and diary_app/backend
+- Go to diary_app/backend and launch node reset-db.ts, node create-user.ts and node server.ts
+- Go to diary_app and launch npx expo start --clear --tunnel, then click "s" for switching to development build
 
 in diary_app/backend : node reset-db.ts, node create-user.ts, node server.ts
 in diary_app : npx expo start --clear --tunnel
@@ -17,19 +15,4 @@ s - switch to development build for auth
 
 # Additional information
 
-/!\ Make sure your IP address corresponds to that of the backend !
 /!\ Make sure your device is connected to the same WiFi as your computer
-Deep linking = ouvrir ton app depuis une URL externe.
-
-- Sans scheme
-  Ton app n'a pas d'URL. Impossible de l'ouvrir depuis un lien, un email, ou une redirection OAuth.
-- Avec scheme
-  Ton app devient accessible via une URL custom
-
-To free space :
-rm -rf $HOME/.gradle
-du -sh $HOME/.local/* 2>/dev/null | sort -rh | head -10
-du -sh $HOME/.config/* 2>/dev/null | sort -rh | head -10
-
-to set correct url :
-echo "EXPO_PUBLIC_BACKEND_URL=$NGROK_URL" >> "$HOME/sgoinfre/mobileModule04/.env"
