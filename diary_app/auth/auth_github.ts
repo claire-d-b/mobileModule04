@@ -47,9 +47,9 @@ const useGithubAuth = () => {
         return;
       }
 
-      const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev/auth/github";
+      const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
       try {
-        const res = await fetch(backendUrl, {
+        const res = await fetch(`${backendUrl}/auth/github`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

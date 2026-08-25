@@ -1,3 +1,6 @@
+bash
+source ./startLinux.sh
+
 # Pour clear les identifiants de connexion
 
 adb uninstall com.anonymous.diaryapp
@@ -27,3 +30,6 @@ To free space :
 rm -rf $HOME/.gradle
 du -sh $HOME/.local/* 2>/dev/null | sort -rh | head -10
 du -sh $HOME/.config/* 2>/dev/null | sort -rh | head -10
+
+to set correct url :
+echo "EXPO_PUBLIC_BACKEND_URL=$NGROK_URL" >> "$HOME/sgoinfre/mobileModule04/.env"

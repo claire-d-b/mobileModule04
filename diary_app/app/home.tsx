@@ -24,7 +24,7 @@ export const emotions = [
   "emoticon-angry",
 ];
 
-const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev";
+const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 interface Entry {
   id: number;

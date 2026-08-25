@@ -12,8 +12,7 @@ interface Information {
   npassword: string;
 }
 
-const backendUrl = "https://wooing-lurch-sift.ngrok-free.dev";
-
+const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 const Register = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
