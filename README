@@ -10,9 +10,13 @@ bash
 - Go to diary_app and launch npx expo start --clear --tunnel, then click "s" for switching to development build
 
 in diary_app/backend : node reset-db.ts, node create-user.ts, node server.ts
-in diary_app : npx expo start --clear --tunnel
+in diary_app :
+- npx expo install expo-dev-client
+- npx expo run:android
+- npx expo start --clear --tunnel
 s - switch to development build for auth
 
-# Additional information
-
 /!\ Make sure your device is connected to the same WiFi as your computer
+
+to free space: rm -rf "$HOME/.gradle"
+

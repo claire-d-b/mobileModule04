@@ -109,8 +109,13 @@ const Home = () => {
 
     try {
       const res = await fetch(
-        `${backendUrl}/entries/${encodeURIComponent(emailToUse)}?page=${pageNumber}`,
-      );
+  `${backendUrl}/entries/${encodeURIComponent(emailToUse)}?page=${pageNumber}`,
+  {
+    headers: {
+      "ngrok-skip-browser-warning": "true",
+    },
+  },
+);
       const data = await res.json();
       if (!res.ok) return;
 
@@ -137,7 +142,7 @@ const Home = () => {
     try {
       const res = await fetch(`${backendUrl}/entries`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true", },
         body: JSON.stringify({
           email,
           date: new Date().toISOString().split("T")[0], // YYYY-MM-DD
@@ -172,6 +177,7 @@ const Home = () => {
     try {
       const res = await fetch(`${backendUrl}/entries/${id}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true", },
       });
       const data = await res.json();
       if (!res.ok) {

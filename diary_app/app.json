@@ -2,7 +2,7 @@
   "expo": {
     "orientation": "default",
     "name": "diary_app",
-    "slug": "diary_app",
+    "slug": "diary-app",
     "owner": "claire-d-b",
     "version": "1.0.0",
     "scheme": "com.anonymous.diaryapp",

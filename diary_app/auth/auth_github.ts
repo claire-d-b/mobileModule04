@@ -50,13 +50,16 @@ const useGithubAuth = () => {
       const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
       try {
         const res = await fetch(`${backendUrl}/auth/github`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            code,
-            redirectUri,
-          }),
-        });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+        body: JSON.stringify({
+          code,
+          redirectUri,
+        }),
+      });
 
         if (!res.ok) {
           const error = await res.text();

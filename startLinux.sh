@@ -37,23 +37,31 @@ export PATH="$NODE_BIN:$PATH"
 node -v
 npm -v
 # ********* java *********
-export JAVA_HOME="$(ls -d "$HOME/sgoinfre/"jdk-25* 2>/dev/null | head -1)"
+export JAVA_HOME="$(ls -d "$HOME/sgoinfre/"jdk-17* 2>/dev/null | head -1)"
 if [ -z "$JAVA_HOME" ]; then
-  wget -P "$HOME/sgoinfre/" https://download.oracle.com/java/25/latest/jdk-25_linux-x64_bin.tar.gz
-  tar -xzf "$HOME/sgoinfre/jdk-25_linux-x64_bin.tar.gz" -C "$HOME/sgoinfre/"
-  rm "$HOME/sgoinfre/jdk-25_linux-x64_bin.tar.gz"
-  export JAVA_HOME="$(ls -d "$HOME/sgoinfre/"jdk-25* | head -1)"
+  wget -P "$HOME/sgoinfre/" https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz
+  tar -xzf "$HOME/sgoinfre/openjdk-17.0.2_linux-x64_bin.tar.gz" -C "$HOME/sgoinfre/"
+  rm "$HOME/sgoinfre/openjdk-17.0.2_linux-x64_bin.tar.gz"
+  export JAVA_HOME="$(ls -d "$HOME/sgoinfre/"jdk-17* | head -1)"
 fi
 export PATH="$JAVA_HOME/bin:$PATH"
 java -version
+# ********* gradle cache & temp (avoid $HOME quota issues) *********
+export GRADLE_USER_HOME="$HOME/sgoinfre/.gradle"
+export TMPDIR="$HOME/sgoinfre/tmp"
+mkdir -p "$GRADLE_USER_HOME" "$TMPDIR"
+echo "GRADLE_USER_HOME=$GRADLE_USER_HOME"
+echo "TMPDIR=$TMPDIR"
 # ********* android sdk *********
-export ANDROID_HOME="$HOME/Android/sdk"
+export ANDROID_HOME="$HOME/sgoinfre/Android/sdk"
+export ANDROID_SDK_HOME="$HOME/sgoinfre/.android"
+mkdir -p "$ANDROID_SDK_HOME"
 if [ ! -d "$ANDROID_HOME" ]; then
   mkdir -p "$ANDROID_HOME"
-  curl -L "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" -o "$HOME/cmdline-tools.zip"
-  unzip "$HOME/cmdline-tools.zip" -d "$ANDROID_HOME/cmdline-tools"
+  curl -L "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" -o "$HOME/sgoinfre/cmdline-tools.zip"
+  unzip "$HOME/sgoinfre/cmdline-tools.zip" -d "$ANDROID_HOME/cmdline-tools"
   mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
-  rm "$HOME/cmdline-tools.zip"
+  rm "$HOME/sgoinfre/cmdline-tools.zip"
   yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses
   "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-34" "build-tools;34.0.0"
 fi
