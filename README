@@ -6,8 +6,6 @@ bash
 - Open 2 terminals
 - source ./startLinux.sh in both 2 terminals
 - npm i in diary_app and diary_app/backend
-- Go to diary_app/backend and launch node reset-db.ts, node create-user.ts and node server.ts
-- Go to diary_app and launch npx expo start --clear --tunnel, then click "s" for switching to development build
 
 in diary_app/backend : node reset-db.ts, node create-user.ts, node server.ts
 in diary_app :

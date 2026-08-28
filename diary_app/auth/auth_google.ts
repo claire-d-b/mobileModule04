@@ -58,6 +58,13 @@ const useGoogleAuth = () => {
     signIn();
   }, [response]);
 
+  console.log("Google request:", request);
+console.log("Google env vars:", {
+  ios: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+  android: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+  web: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+});
+
   return { promptAsync, request };
 };
 

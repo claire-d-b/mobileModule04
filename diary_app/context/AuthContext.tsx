@@ -4,7 +4,8 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useRef,
+  useMemo,
+  useCallback
 } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -54,15 +55,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const setLocalLogin = async (login: string | null) => {
-    setLocalLoginState(login);
-  };
+  const setLocalLogin = useCallback(async (login: string | null) => {
+  setLocalLoginState(login);
+}, []);
 
-  return (
-    <AuthContext.Provider value={{ localLogin, setLocalLogin, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = useMemo(
+  () => ({ localLogin, setLocalLogin, loading }),
+  [localLogin, loading]
+);
+
+return (
+  <AuthContext.Provider value={value}>
+    {children}
+  </AuthContext.Provider>
+);
 };
 
 export const useAuthContext = () => useContext(AuthContext);
